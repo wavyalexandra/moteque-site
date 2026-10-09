@@ -1,0 +1,910 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Alexandra Friesinger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Onest:wght@400;500&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: a dark petrol screening room. Split hero with a dealt stack of frames, a pinned horizontal strip of series that open into a full-screen viewer, formats of work, an FAQ accordion, one statement, contacts. Dark-first; light theme is pale mineral. */
+:root{
+  --bg:#0C1C1E;          /* deep petrol */
+  --surface:#132A2C;
+  --fg:#E4EEEA;          /* mineral white */
+  --muted:#8EAAA4;
+  --line:#22403F;
+  --accent:#FF6A4D;      /* coral, the only accent: fills and large type */
+  --accent-ink:#FF7C61;  /* coral for text on --bg */
+  --on-accent:#0C1C1E;
+  --scrim:rgba(8,20,22,.94);
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Onest","Helvetica Neue",Arial,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --gut:clamp(16px,4vw,56px);
+  --sec:clamp(88px,12vw,168px);
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#E3ECE8;--surface:#EEF4F1;--fg:#0E2426;--muted:#4A6662;--line:#C4D4CF;--accent:#C4381D;--accent-ink:#C4381D;--on-accent:#FBF7F5;--scrim:rgba(227,236,232,.96);color-scheme:light}}
+:root[data-theme="light"]{--bg:#E3ECE8;--surface:#EEF4F1;--fg:#0E2426;--muted:#4A6662;--line:#C4D4CF;--accent:#C4381D;--accent-ink:#C4381D;--on-accent:#FBF7F5;--scrim:rgba(227,236,232,.96);color-scheme:light}
+
+:root[data-lang="ru"] body [lang="en"],:root[data-lang="en"] body [lang="ru"]{display:none}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;max-width:100%;position:relative;overscroll-behavior-x:none}
+html{overflow-x:hidden;overflow-x:clip;overscroll-behavior-x:none;max-width:100%}
+.hero{overflow-x:clip}
+@media (max-width:899px){.pan{overscroll-behavior-x:contain;touch-action:pan-x pan-y}}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:300;margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+button{font:inherit;color:inherit}
+.wrap{padding-inline:var(--gut);max-width:1440px;margin-inline:auto}
+.mono{font:400 12px/1.4 var(--mono);letter-spacing:.04em;color:var(--muted)}
+.eyebrow{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+em{font-style:normal;color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.i18n{transition:filter .22s ease,opacity .22s ease}
+.switching .i18n{filter:blur(3px);opacity:.35}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{height:68px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-right:auto;white-space:nowrap;min-width:0}
+.brand .bn{font:400 15px/1 var(--display);letter-spacing:-.01em}
+.brand .bsep{width:1px;height:18px;background:var(--line);transform:rotate(18deg)}
+.brand .bt{font:400 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:1180px){.brand .bsep,.brand .bt{display:none}}
+.links{display:flex;gap:24px}
+.links a{font-size:14px;text-decoration:none;color:var(--muted);transition:color .15s ease}
+.links a:hover{color:var(--fg)}
+.lang,.seg{display:flex;border:1px solid var(--line)}
+.lang button,.seg button{all:unset;cursor:pointer;font:400 11px/1 var(--mono);letter-spacing:.1em;padding:8px 10px;color:var(--muted);white-space:nowrap}
+.lang button[aria-pressed="true"],.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 15px/1 var(--body);padding:16px 22px;text-decoration:none;white-space:nowrap;border:1px solid var(--fg);cursor:pointer;background:none;transition:transform .16s var(--ease-out),background .2s ease,color .2s ease,border-color .2s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-ghost{color:var(--fg)}
+@media (hover:hover) and (pointer:fine){.btn-primary:hover{background:var(--fg);border-color:var(--fg);color:var(--bg)}.btn-ghost:hover{background:var(--fg);color:var(--bg)}}
+.nav .btn{padding:11px 16px;font-size:14px}
+@media (max-width:820px){.links{display:none}.nav .btn{display:none}}
+
+/* frames: placeholders for real work, painted like soft studio light. A real <img> or <video> inside replaces the paint. */
+.frame{position:relative;overflow:hidden;background:var(--f1,#555);max-width:100%;display:block}
+.frame::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at var(--px,30%) var(--py,28%),var(--f2,#ccc) 0%,transparent 70%),
+  radial-gradient(70% 60% at var(--qx,80%) 90%,var(--f3,#222) 0%,transparent 70%)}
+.frame::after{content:"";position:absolute;left:var(--sx,50%);bottom:-8%;width:var(--sw,46%);aspect-ratio:3/5;transform:translateX(-50%);border-radius:50% 50% 0 0;background:var(--f4,rgba(0,0,0,.28))}
+.frame.has-media::before,.frame.has-media::after{display:none}
+.frame img,.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.frame .play{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
+.frame .play i{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);display:grid;place-items:center}
+.frame .play i::after{content:"";border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
+
+/* hero */
+.hero{padding-block:clamp(48px,7vw,96px) clamp(72px,8vw,120px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,6vw,96px);align-items:center}
+.hero h1{font-size:clamp(38px,5.6vw,84px);line-height:1.06;margin-top:0}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .ln>span{display:inline-block}
+.lede{margin-top:28px;max-width:44ch;font-size:clamp(16px,1.35vw,19px);color:var(--muted)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.stack{all:unset;cursor:pointer;position:relative;width:min(100%,440px);aspect-ratio:4/5;justify-self:end;display:block}
+.stack .frame{position:absolute;inset:0;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.stack-cap{position:absolute;left:0;right:0;bottom:-34px;display:flex;justify-content:space-between;gap:12px}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.stack{justify-self:start;width:min(100%,360px);margin-top:12px}}
+
+/* series strip */
+.works{padding-top:var(--sec)}
+@media (min-width:900px){.hero{padding-bottom:clamp(40px,5vw,72px)}.works{min-height:100dvh;padding-block:calc(68px + 4vh) 4vh;display:flex;flex-direction:column;justify-content:center}.works .pan{margin-top:clamp(24px,4vh,48px)}.works>.wrap{width:100%}}
+.works-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.works h2,.services h2,.process h2{font-size:clamp(30px,4vw,56px);line-height:1.08}
+.hint{max-width:32ch}
+.pan{margin-top:48px}
+.track{display:flex;gap:clamp(20px,2.4vw,36px);align-items:flex-end;padding-inline:var(--gut);width:max-content}
+.work{all:unset;cursor:pointer;flex:none;width:var(--w);display:block}
+.work .frame{width:100%;aspect-ratio:var(--ar)}
+.work .frame>span.zoom{position:absolute;inset:0;z-index:3;background:color-mix(in srgb,var(--bg) 0%,transparent);transition:background .25s ease}
+.work .ttl{display:block;font:500 16px/1.3 var(--body);margin-top:16px}
+.work .mono{display:flex;justify-content:space-between;gap:12px;margin-top:6px}
+.work .cnt{color:var(--accent-ink)}
+@media (hover:hover) and (pointer:fine){
+  .work .frame>*:not(.zoom),.work .frame::before{transition:transform .6s var(--ease-out)}
+  .work:hover .frame::before{transform:scale(1.04)}
+  .work:hover .frame>img{transform:scale(1.04)}
+}
+@media (max-width:899px){
+  .pan{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:12px}
+  .work{scroll-snap-align:start;width:calc(var(--w) * .78)}
+}
+
+.cham-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .6s ease}
+/* where do we start: three huge lines, a frame floats with the cursor */
+.formats{padding-top:var(--sec)}
+.formats h2,.faq h2{font-size:clamp(30px,4vw,56px);line-height:1.08}
+.starts{margin-top:40px;border-bottom:1px solid var(--line)}
+.srow{border-top:1px solid var(--line)}
+.shead{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding-block:clamp(18px,2.4vw,30px)}
+.shead:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.sk{font:300 clamp(34px,6.4vw,100px)/1 var(--display);letter-spacing:-.035em;color:var(--muted);transition:color .35s ease,transform .6s var(--ease-out);display:inline-block}
+.sarr{width:clamp(44px,4.4vw,64px);height:clamp(44px,4.4vw,64px);border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:transform .5s var(--ease-out),background .3s ease,border-color .3s ease}
+.sarr svg{width:40%;height:40%;stroke:var(--fg);stroke-width:1.5;fill:none;transition:stroke .3s ease}
+.srow.on .sk{color:var(--fg);transform:translateX(clamp(8px,1.6vw,24px))}
+.srow.on .sarr{transform:rotate(90deg);background:var(--accent);border-color:var(--accent)}
+.srow.on .sarr svg{stroke:var(--on-accent)}
+.sbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease-out)}
+.srow.on .sbody{grid-template-rows:1fr}
+.sbody>div{overflow:hidden}
+.sinner{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:clamp(20px,4vw,64px);align-items:end;padding:0 0 clamp(24px,3vw,40px) clamp(8px,1.6vw,24px)}
+.sinner p{color:var(--muted);max-width:46ch;font-size:clamp(16px,1.2vw,18px)}
+.sinner .sget{font:400 12px/1.7 var(--mono);letter-spacing:.03em;color:var(--muted)}
+.sget b{display:block;font-weight:400;letter-spacing:.12em;text-transform:uppercase;font-size:11px;margin-bottom:6px;color:var(--fg)}
+@media (hover:none),(max-width:900px){
+  .sinner{grid-template-columns:1fr;align-items:start;padding-left:0}
+  .srow.on .sk{transform:none}
+}
+@media (prefers-reduced-motion:reduce){.sk,.sarr,.sbody{transition:none}}
+
+/* faq */
+.faq{padding-top:var(--sec)}
+.faq .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(32px,6vw,96px);align-items:start}
+.faq-head{position:sticky;top:110px}
+.faq-head p{margin-top:20px;color:var(--muted);max-width:32ch}
+.qa{border-top:1px solid var(--line)}
+.qa:last-child{border-bottom:1px solid var(--line)}
+.qa button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:1fr 36px;gap:20px;align-items:center;padding:24px 0;font:400 clamp(18px,1.6vw,22px)/1.3 var(--display);letter-spacing:-.01em}
+.qa button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.qa .pm{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;position:relative;transition:transform .35s var(--ease-out),background .2s ease,border-color .2s ease}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--fg);transform:translate(-50%,-50%);transition:transform .35s var(--ease-out)}
+.qa .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.qa[data-open="true"] .pm{transform:rotate(180deg);background:var(--accent);border-color:var(--accent)}
+.qa[data-open="true"] .pm::before,.qa[data-open="true"] .pm::after{background:var(--on-accent)}
+.qa[data-open="true"] .pm::after{transform:translate(-50%,-50%) rotate(0deg)}
+.qa .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease-out)}
+.qa[data-open="true"] .a{grid-template-rows:1fr}
+.qa .a>div{overflow:hidden}
+.qa .a p{color:var(--muted);max-width:60ch;padding:0 56px 26px 0}
+@media (max-width:900px){.faq .wrap{grid-template-columns:1fr}.faq-head{position:static}.qa .a p{padding-right:0}}
+@media (prefers-reduced-motion:reduce){.qa .a,.qa .pm,.qa .pm::before,.qa .pm::after,.fmt{transition:none}}
+
+/* tools marquee (the only one) */
+.tools{margin-top:var(--sec);border-block:1px solid var(--line);overflow:hidden;padding-block:26px}
+.tools .row{display:flex;width:max-content;animation:marq 38s linear infinite}
+.tools span{font:300 clamp(26px,3vw,40px)/1 var(--display);padding-inline:clamp(20px,2.6vw,40px);white-space:nowrap;color:var(--muted)}
+.tools span:nth-child(3n+1){color:var(--fg)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.statement .w{display:inline-block;will-change:opacity}
+.statement.wr .w{opacity:.14;transition:opacity .6s ease calc(var(--i) * 70ms)}
+.statement.wr.lit .w{opacity:1}
+/* about statement */
+.about{padding-top:var(--sec)}
+.about .wrap{display:grid;gap:28px}
+.statement{font:300 clamp(28px,3.8vw,58px)/1.2 var(--display);letter-spacing:-.02em;max-width:26ch;text-wrap:pretty}
+.facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:12px}
+.facts b{display:block;font:500 15px/1.3 var(--body)}
+
+/* contact: full-screen finale over the film */
+.contact{position:relative;isolation:isolate;margin-top:var(--sec);min-height:100dvh;display:flex;flex-direction:column;justify-content:flex-end;padding-block:clamp(120px,18vh,200px) clamp(32px,5vw,56px);overflow:hidden;
+  --fg:#F2F4F1;--muted:rgba(242,244,241,.74);--surface:rgba(255,255,255,.09);--line:rgba(255,255,255,.2);--accent-ink:#FF9A80;color:var(--fg)}
+.contact .wrap{width:100%}
+.contact-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.vplay{all:unset;cursor:pointer;position:absolute;right:clamp(16px,4vw,56px);top:clamp(88px,12vh,140px);width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;z-index:1}
+.vplay svg{width:20px;height:20px;fill:#fff;margin-left:3px}
+.vplay:active{transform:scale(.95)}
+.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(8,14,13,.9) 0%,rgba(8,14,13,.6) 45%,rgba(8,14,13,.25) 100%)}
+.contact .eyebrow{color:var(--muted)}
+.contact h2{font-size:clamp(48px,8.5vw,128px);line-height:.95;margin-top:20px;letter-spacing:-.03em}
+.contact .lede{margin-top:24px;color:var(--muted);max-width:44ch}
+.rows{margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:1100px){.rows{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.row-c{background:var(--surface);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.row-c .mono{color:var(--muted)}
+.row-c .val{font:500 17px/1.3 var(--body);user-select:all;overflow-wrap:anywhere;text-decoration:none}
+@media (hover:hover){.row-c a.val:hover{text-decoration:underline;text-underline-offset:3px}}
+.copy{all:unset;cursor:pointer;align-self:flex-start;font:400 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);padding:6px 0}
+.copy:active{transform:scale(.97)}
+@media (max-width:820px){.rows{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);margin-top:56px;color:var(--muted);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* series viewer */
+.lb{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--bg) 96%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.lb-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px;width:100%;flex-wrap:wrap}
+.lb-top h2{font-size:clamp(18px,2vw,26px);font-weight:400;line-height:1.2}
+.lb-top .mono{margin-top:6px}
+.lb.one .seg,.lb.one .lb-thumbs,.lb.one .nav-btn,.lb.one #lb-count{display:none}
+.lb.one .lb-stagewrap{grid-template-columns:minmax(0,1fr)}
+
+/* series with text: text column on the left, frames on the right (desktop) */
+@media (max-width:899px){.lb[data-mode="single"]:not(.one) .lb-desc{display:none}}
+@media (min-width:900px){
+  .lb.split{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);grid-template-rows:minmax(0,1fr);column-gap:clamp(32px,4vw,64px);padding-inline:var(--gut)}
+  .lb.split .lb-top{padding:0;margin:0;max-width:none;width:auto;display:flex;flex-direction:column;justify-content:center;gap:0;min-height:0;overflow:auto;padding-block:24px}
+  .lb.split .lb-top>div:first-child{flex:none}
+  .lb.split .lb-top h2{font-size:clamp(22px,2.2vw,32px);line-height:1.15}
+  .lb.split .lb-desc{font-size:15px;margin-top:20px}
+  .lb.split .lb-ctrl{margin-top:28px}
+  .lb.split .lb-close{position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);right:var(--gut);z-index:2;background:var(--bg)}
+  .lb.split .lb-body{padding-block:24px}
+  .lb.split .lb-grid{padding-inline:0;max-width:none;padding-block:52px 24px}
+  .lb.split .lb-single{padding-inline:0;justify-content:center}
+  .lb.split .lb-stage{width:min(100%,calc((100dvh - 200px) * var(--arw) / var(--arh)))}
+}
+/* single film: text beside the video on wide screens, stacked on phones */
+.lb.one{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);align-items:center;column-gap:clamp(32px,4vw,64px);padding-inline:var(--gut);overflow:auto}
+.lb.one .lb-top{padding:0;margin:0;max-width:none;width:auto;display:block}
+.lb.one .lb-top h2{font-size:clamp(22px,2.2vw,32px);line-height:1.15}
+.lb.one .lb-desc{font-size:16px;margin-top:20px}
+.lb.one .lb-ctrl{position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);right:var(--gut);z-index:2}
+.lb.one .lb-body{overflow:visible;display:flex;align-items:center;min-height:0}
+.lb.one .lb-single{min-height:0;padding:0;width:100%}
+.lb.one .lb-stage{width:min(100%,calc((100dvh - 120px) * var(--arw) / var(--arh)))}
+@media (max-width:900px){
+  .lb.one{grid-template-columns:minmax(0,1fr);align-content:start;row-gap:24px;padding-block:76px 32px}
+  .lb.one .lb-body{order:-1}
+  .lb.one .lb-stage{width:100%}
+}
+
+.lb-top{align-items:flex-start;flex-wrap:nowrap}
+.lb-top>div:first-child{flex:1 1 0}
+.lb-desc{white-space:pre-line;margin-top:14px;max-width:62ch;font-size:15px;line-height:1.6;color:var(--fg);opacity:.86;text-wrap:pretty}
+.lb-top>div:first-child{min-width:0}
+.lb-ctrl{display:flex;align-items:center;gap:12px}
+.lb-close{all:unset;cursor:pointer;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);transition:transform .16s var(--ease-out),background .2s}
+.lb-close:active{transform:scale(.95)}
+.lb-close svg{width:18px;height:18px;stroke:var(--fg);stroke-width:1.5}
+@media (hover:hover){.lb-close:hover{background:var(--surface)}}
+.lb-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.lb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--cw,240px),1fr));gap:14px;padding-block:8px 48px;width:100%}
+.lb-grid .cellf{all:unset;cursor:zoom-in;display:block}
+.lb-grid .frame{width:100%;aspect-ratio:var(--ar)}
+.play-sm{position:absolute;left:12px;bottom:12px;z-index:2;width:32px;height:32px;border-radius:50%;background:rgba(10,20,20,.4);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center}
+.play-sm::after{content:"";border-left:9px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
+.lb-single{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding-inline:var(--gut);padding-bottom:16px}
+.lb-stagewrap{flex:1;min-height:0;width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px}
+.lb-stage{justify-self:center;touch-action:pan-y;width:min(100%,calc((100dvh - 290px) * var(--arw) / var(--arh)));aspect-ratio:var(--ar)}
+.lb-stage .frame{width:100%;height:100%}
+.nav-btn{all:unset;cursor:pointer;width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);transition:transform .16s var(--ease-out),opacity .2s}
+.nav-btn:active{transform:scale(.95)}
+.nav-btn[disabled]{opacity:.3;cursor:default}
+.nav-btn svg{width:20px;height:20px;stroke:var(--fg);stroke-width:1.5;fill:none}
+.lb-thumbs{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:4px}
+.lb-thumbs button{all:unset;cursor:pointer;flex:none;height:56px;aspect-ratio:var(--ar);opacity:.45;transition:opacity .2s ease,outline-color .2s;outline:1px solid transparent;outline-offset:2px}
+.lb-thumbs button[aria-current="true"]{opacity:1;outline-color:var(--accent)}
+.lb-thumbs .frame{width:100%;height:100%}
+@media (max-width:640px){.lb-stagewrap{grid-template-columns:minmax(0,1fr)}.nav-btn{display:none}.lb-stage{width:min(100%,calc((100dvh - 230px) * var(--arw) / var(--arh)))}}
+
+@media (prefers-reduced-motion:reduce){.tools .row{animation:none}.i18n,.work .frame::before{transition:none}}
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Alexandra Friesinger"><span class="bn"><span lang="ru">Александра Фрайзингер</span><span lang="en">Alexandra Friesinger</span></span><span class="bsep" aria-hidden="true"></span><span class="bt"><span lang="ru">AI-визуал · портфолио</span><span lang="en">AI visuals · portfolio</span></span></a>
+    <nav class="links" aria-label="Main">
+      <a href="#work"><span lang="ru">Кейсы</span><span lang="en">Cases</span></a>
+      <a href="#formats"><span lang="ru">Как начать</span><span lang="en">Start</span></a>
+      <a href="#faq"><span lang="ru">Вопросы</span><span lang="en">FAQ</span></a>
+      <a href="#about"><span lang="ru">Обо мне</span><span lang="en">About</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-primary" href="#contact"><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></a>
+  </div>
+</header>
+
+<main id="top" class="i18n">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>
+          <span lang="ru"><span class="ln"><span>Снимаю то,</span></span><span class="ln"><span>чего <em>не было</em></span></span></span>
+          <span lang="en"><span class="ln"><span>I shoot what</span></span><span class="ln"><span><em>never happened</em></span></span></span>
+        </h1>
+        <p class="lede">
+          <span lang="ru">Кампании, предметка и видео для fashion, beauty и ювелирных брендов. Модель, свет и локация придуманы. Продукт настоящий.</span>
+          <span lang="en">Campaigns, product shots and film for fashion, beauty and jewelry brands. The model, the light and the place are invented. The product is real.</span>
+        </p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#contact"><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></a>
+          <a class="btn btn-ghost" href="#work"><span lang="ru">Смотреть кейсы</span><span lang="en">See the cases</span></a>
+        </div>
+      </div>
+      <button class="stack" type="button" aria-label="Open series">
+        <span class="frame" data-s="3" data-f="0"></span>
+        <span class="frame" data-s="2" data-f="0"></span>
+        <span class="frame" data-s="0" data-f="0"></span>
+        <span class="stack-cap mono"><span class="cap-t"></span><span class="cap-n"></span></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="works" id="work">
+    <div class="wrap works-head">
+      <h2><span lang="ru">Кейсы</span><span lang="en">Cases</span></h2>
+      <p class="mono hint"><span lang="ru">Нажмите на кадр, чтобы открыть кейс целиком</span><span lang="en">Tap a frame to open the full case</span></p>
+    </div>
+    <div class="pan">
+      <div class="track" id="track"></div>
+    </div>
+  </section>
+
+  <section class="formats" id="formats">
+    <div class="wrap">
+      <h2><span lang="ru">С чего начнём?</span><span lang="en">Where do we start?</span></h2>
+      <div class="starts">
+        <div class="srow" data-i="0">
+          <button type="button" class="shead" aria-expanded="false" aria-controls="sb0"><span class="sk"><span lang="ru">Только идея</span><span lang="en">You only have an idea</span></span><span class="sarr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="sbody" id="sb0" role="region"><div><div class="sinner">
+            <p><span lang="ru">Даже без продукта в кадре. Вместе соберём визуальный мир бренда: кто ваш герой, где он живёт, какой у него свет и палитра. Дальше этот мир работает на все будущие съёмки.</span><span lang="en">Even with no product in the shot yet. Together we build your brand's visual world: who your hero is, where they live, what their light and palette are. That world then carries every future shoot.</span></p>
+            <p class="sget"><b><span lang="ru">Что получите</span><span lang="en">What you get</span></b><span lang="ru">Мудборд и визуальную концепцию<br>Постоянную модель под ваш бренд<br>Первую серию кадров в новом стиле</span><span lang="en">A moodboard and visual concept<br>A recurring model cast for your brand<br>A first series in the new look</span></p>
+            <a class="btn btn-ghost" href="#contact"><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></a>
+          </div></div></div>
+        </div>
+        <div class="srow" data-i="1">
+          <button type="button" class="shead" aria-expanded="false" aria-controls="sb1"><span class="sk"><span lang="ru">Только фото продукта</span><span lang="en">Just a product photo</span></span><span class="sarr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="sbody" id="sb1" role="region"><div><div class="sinner">
+            <p><span lang="ru">Этого достаточно. Я придумаю, кто его носит, где и при каком свете, и соберу из этого кампанию. Вашему продукту не нужно никуда ехать.</span><span lang="en">That's enough. I'll decide who wears it, where and in what light, and build a campaign from it. Your product never has to travel.</span></p>
+            <p class="sget"><b><span lang="ru">Что получите</span><span lang="en">What you get</span></b><span lang="ru">Модель и локацию под ваш бренд<br>Серию кадров для сайта и соцсетей<br>Видео для Reels, если нужно</span><span lang="en">A model and location that fit your brand<br>A series for your site and socials<br>A Reels film if you need one</span></p>
+            <a class="btn btn-ghost" href="#contact"><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></a>
+          </div></div></div>
+        </div>
+        <div class="srow" data-i="2">
+          <button type="button" class="shead" aria-expanded="false" aria-controls="sb2"><span class="sk"><span lang="ru">Съёмка есть, но мало</span><span lang="en">A shoot, just not enough</span></span><span class="sarr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="sbody" id="sb2" role="region"><div><div class="sinner">
+            <p><span lang="ru">Одна хорошая съёмка может прожить ещё год. Я разверну её в новые сезоны, локации и форматы, а продукт и настроение останутся вашими.</span><span lang="en">One good shoot can live for another year. I'll stretch it into new seasons, locations and formats, while the product and mood stay yours.</span></p>
+            <p class="sget"><b><span lang="ru">Что получите</span><span lang="en">What you get</span></b><span lang="ru">Новые локации и сезоны из старых кадров<br>Недостающие ракурсы и крупные планы<br>Все размеры для каждой площадки</span><span lang="en">New locations and seasons from old frames<br>The angles and close-ups you're missing<br>Every size for every platform</span></p>
+            <a class="btn btn-ghost" href="#contact"><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></a>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="tools" aria-label="Tools">
+    <div class="row">
+      <span>Midjourney</span><span>Nano Banana</span><span>Kling</span><span>Seedance</span><span>Higgsfield</span><span>Photoshop</span>
+      <span aria-hidden="true">Midjourney</span><span aria-hidden="true">Nano Banana</span><span aria-hidden="true">Kling</span><span aria-hidden="true">Seedance</span><span aria-hidden="true">Higgsfield</span><span aria-hidden="true">Photoshop</span>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <p class="statement">
+        <span lang="ru">До AI я семь лет работала в финтехе и прошла путь от продаж до COO. Поэтому думаю о <em>задаче бренда</em>, сроках и бюджете, а не только о красивой картинке.</span>
+        <span lang="en">Before AI, I spent seven years in fintech, from sales to COO. So I think about the <em>brand's goal</em>, timing and budget, not only the pretty picture.</span>
+      </p>
+      <div class="facts">
+        <div><b><span lang="ru">Удалённо</span><span lang="en">Remote</span></b><span class="mono"><span lang="ru">Израиль, работаю по всему миру</span><span lang="en">Based in Israel, working worldwide</span></span></div>
+        <div><b><span lang="ru">Языки</span><span lang="en">Languages</span></b><span class="mono"><span lang="ru">Русский, английский</span><span lang="en">Russian, English</span></span></div>
+        <div><b><span lang="ru">Форматы</span><span lang="en">Formats</span></b><span class="mono">4:5, 1:1, 9:16, 16:9</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="faq-head">
+        <h2><span lang="ru">Частые вопросы</span><span lang="en">Questions</span></h2>
+        <p><span lang="ru">Не нашли свой вопрос? Напишите, отвечу в тот же день.</span><span lang="en">Didn't find yours? Write to me and I'll reply the same day.</span></p>
+      </div>
+      <div class="qa-list">
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa0"><span><span lang="ru">Будет ли видно, что это ИИ?</span><span lang="en">Will it look like AI?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa0" role="region"><div><p><span lang="ru">Моя задача, чтобы не было. Я слежу за кожей, руками, тканью и светом, и каждый кадр дорабатываю вручную, прежде чем отдать.</span><span lang="en">That's exactly what I work against. I watch skin, hands, fabric and light, and every frame gets hand finishing before you see it.</span></p></div></div>
+        </div>
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa1"><span><span lang="ru">Нужно ли присылать сам продукт?</span><span lang="en">Do I need to ship the product?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa1" role="region"><div><p><span lang="ru">Нет. Достаточно хороших фото продукта с нескольких сторон. Для одежды и украшений пригодятся крупные планы фактуры и деталей.</span><span lang="en">No. Good photos from a few angles are enough. For clothing and jewelry, close-ups of texture and details help a lot.</span></p></div></div>
+        </div>
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa2"><span><span lang="ru">Мой продукт останется точным?</span><span lang="en">Will my product stay accurate?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa2" role="region"><div><p><span lang="ru">Да. Форма, цвет, этикетка и детали должны совпадать с оригиналом. Если что-то поплыло, я правлю, пока не совпадёт.</span><span lang="en">Yes. Shape, color, label and details have to match the original. If anything drifts, I fix it until it does.</span></p></div></div>
+        </div>
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa3"><span><span lang="ru">Можно ли сохранить одну модель на все съёмки?</span><span lang="en">Can we keep the same model across shoots?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa3" role="region"><div><p><span lang="ru">Да. Модель фиксируется и остаётся одним и тем же человеком во всех кадрах, видео и следующих сериях. Так бренд получает своё узнаваемое лицо.</span><span lang="en">Yes. The model is locked and stays the same person across frames, films and future series, so your brand gets a recognizable face.</span></p></div></div>
+        </div>
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa4"><span><span lang="ru">Кому принадлежат права на изображения?</span><span lang="en">Who owns the images?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa4" role="region"><div><p><span lang="ru">Вы получаете готовые файлы для коммерческого использования на сайте, в соцсетях и рекламе. Все условия фиксируем в договоре.</span><span lang="en">You get final files for commercial use on your site, social media and ads. All terms are set in the contract.</span></p></div></div>
+        </div>
+        <div class="qa" data-open="false">
+          <button type="button" aria-expanded="false" aria-controls="qa5"><span><span lang="ru">Сколько это стоит?</span><span lang="en">How much does it cost?</span></span><span class="pm" aria-hidden="true"></span></button>
+          <div class="a" id="qa5" role="region"><div><p><span lang="ru">Зависит от формата, количества кадров и видео. Напишите пару строк о задаче, и я пришлю расчёт.</span><span lang="en">It depends on the format and the number of frames and films. Send a couple of lines about the task and I'll send a quote.</span></p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <video class="contact-bg" src="vid/autumn-bg.mp4" poster="vid/autumn-poster.jpg" muted loop playsinline webkit-playsinline autoplay preload="auto" disablepictureinpicture aria-hidden="true"></video>
+    <div class="wrap">
+      <p class="eyebrow"><span lang="ru">Контакты</span><span lang="en">Contact</span></p>
+      <h2><span lang="ru">Обсудить проект</span><span lang="en">Discuss a project</span></h2>
+      <p class="lede"><span lang="ru">Напишите пару строк о бренде, а я предложу идею для первой серии.</span><span lang="en">Send a couple of lines about your brand and I'll come back with an idea for a first series.</span></p>
+      <div class="rows">
+        <div class="row-c"><span class="mono">Email</span><span class="val" id="v-mail">alexandrafriesinger@gmail.com</span><button class="copy" type="button" data-copy="v-mail"><span lang="ru">Копировать</span><span lang="en">Copy</span></button></div>
+        <div class="row-c"><span class="mono">Telegram</span><a class="val" id="v-tg" href="https://t.me/Alexandrafrie" target="_blank" rel="noopener">@Alexandrafrie</a><button class="copy" type="button" data-copy="v-tg"><span lang="ru">Копировать</span><span lang="en">Copy</span></button></div>
+        <div class="row-c"><span class="mono">LinkedIn</span><a class="val" id="v-li" href="https://www.linkedin.com/in/alexafriesinger/" target="_blank" rel="noopener">linkedin.com/in/alexafriesinger</a><button class="copy" type="button" data-copy="v-li"><span lang="ru">Копировать</span><span lang="en">Copy</span></button></div>
+        <div class="row-c"><span class="mono">Instagram</span><a class="val" id="v-ig" href="https://www.instagram.com/aimagination_lab/" target="_blank" rel="noopener">@aimagination_lab</a><button class="copy" type="button" data-copy="v-ig"><span lang="ru">Копировать</span><span lang="en">Copy</span></button></div>
+      </div>
+      <footer class="mono"><span>© 2026 Alexandra Friesinger</span><span lang="ru">Все изображения на сайте созданы с помощью ИИ</span><span lang="en">All imagery on this site is AI-generated</span></footer>
+    </div>
+  </section>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden>
+  <div class="lb-top wrap">
+    <div>
+      <h2 id="lb-title"></h2>
+      <p class="mono" id="lb-meta"></p>
+      <p class="lb-desc" id="lb-desc" hidden></p>
+    </div>
+    <div class="lb-ctrl">
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" data-mode="grid" aria-pressed="true"><span lang="ru">Все кадры</span><span lang="en">All frames</span></button>
+        <button type="button" data-mode="single" aria-pressed="false"><span lang="ru">По одному</span><span lang="en">One by one</span></button>
+      </div>
+      <button class="lb-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+  </div>
+  <div class="lb-body">
+    <div class="lb-grid wrap" id="lb-grid"></div>
+    <div class="lb-single" id="lb-single" hidden>
+      <div class="lb-stagewrap">
+        <button class="nav-btn" type="button" data-step="-1" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="lb-stage" id="lb-stage"></div>
+        <button class="nav-btn" type="button" data-step="1" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <p class="mono" id="lb-count"></p>
+      <div class="lb-thumbs" id="lb-thumbs"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ===== Series data. To use real work, put image URLs in `src` (or video URLs with type:"video"). Empty src = painted placeholder. ===== */
+const SERIES=[
+  {ru:"Бельё в затопленной машине",en:"Lingerie in a flooded car",tools:"Nano Banana, Seedream, Midjourney",ar:[3,2],w:480,pal:["#0E1A16","#2F5A4A","#050807"],
+   descRu:"AI не любит бельё. Тонкое кружево, прозрачная сетка и живая кожа как раз то, на чём модели начинают ошибаться. Поэтому в Higgsfield я взяла две модели, Nano Banana и Seedream, и каждой дала ту часть, которая ей удаётся. После этого собрала локацию в Midjourney и утопила всё это в машине с карпами кои, раз уж кружево выдержало.",
+   descEn:"AI hates lingerie. Fine lace, sheer mesh and real skin texture are exactly where models start to cheat. So I used two of them in Higgsfield, Nano Banana and Seedream, and gave each one the part it's good at. After that, I built the location in Midjourney and put the whole thing in a flooded car with koi, because the lace held up.",
+   frames:[
+    {src:"img/lingerie-4.jpg",alt:"Model in emerald lace behind the wheel of a flooded silver car"},
+    {src:"img/lingerie-6.jpg",alt:"Emerald lingerie set floating on a pond with koi"},
+    {src:"img/lingerie-2.jpg",alt:"Model floating among water lilies next to the car"},
+    {src:"img/lingerie-5.jpg",alt:"Model laughing in the front trunk filled with water lilies"},
+    {src:"img/lingerie-1.jpg",alt:"Close-up of the lace collar and ring clasp with water drops"},
+    {src:"img/lingerie-3.jpg",alt:"Model seen through a rain-covered windshield"}
+   ]},
+  {ru:"Осенний фильм для бренда одежды",en:"Autumn film for a clothing brand",tools:"",dur:"0:19",ar:[16,9],w:540,pal:["#3A3326","#C9B79A","#1C1913"],video:true,
+   descRu:"AI-видео не обязательно должно состоять из взрывов, быстрых склеек и идеально вылизанных кадров.\n\nЭтот ролик для бренда одежды про что-то тихое: про настроение.\n\nНикакого экшена и навязчивых продуктовых планов. Только свет, фактура, движение и атмосфера: то, каким бренд ощущается, а не только как он выглядит.\n\nБренд не только то, что он продаёт. Это ещё и ощущение, которое запоминают люди.",
+   descEn:"AI video doesn't have to be explosions, fast cuts and perfectly polished frames.\n\nThis piece for a clothing brand is about something quieter: a mood.\n\nNo action. No hard-sell product shots. Just light, texture, movement and atmosphere: the way the brand feels, not only how it looks.\n\nA brand is not only what it sells. It's the feeling people remember.",
+   frames:[{src:"vid/autumn-film.mp4",type:"video",poster:"vid/autumn-poster.jpg",alt:"Woman in a cream knit sweater walking on a boardwalk through a foggy autumn bog"}]},
+  {ru:"Стритвир для лондонского бренда",en:"Streetwear for a London brand",tools:"",ar:[3,4],w:340,pal:["#3B2E28","#CDBFAE","#151210"],
+   descRu:"Внешность модели я каждый раз подбираю под конкретный бренд. Этот бренд из Лондона, поэтому парень в кадре должен выглядеть так, будто вырос где-то между Хакни и Брикстоном: небрежная короткая стрижка, веснушки, лицо, которое легко представить в очереди за флэт уайтом в восемь утра.\n\nНа живой съёмке ради такого типажа проходят семь кругов ада кастинга. С AI я нашла его без единого агентства и сохранила одним и тем же человеком во всех кадрах, от общего плана в лофте до портрета у окна.",
+   descEn:"I cast the model's look for every brand separately. This one is from London, so the guy had to look like he grew up somewhere between Hackney and Brixton: messy short crop, freckles, the kind of face you'd see in a flat white queue at 8 a.m.\n\nOn a real shoot, finding that type means going through seven circles of casting hell. With AI I found him without a single agency and kept him the same person in every frame, from the wide loft shots to the portrait by the window.",
+   frames:[
+    {src:"img/street-1.jpg",alt:"Model leaning on a concrete wall with the cat print cast as a shadow behind him"},
+    {src:"img/street-2.jpg",alt:"Back view of the crewneck with the large cat print in a brick loft"},
+    {src:"img/street-3.jpg",alt:"Model running a hand through his hair, small cat logo on the chest"},
+    {src:"img/street-4.jpg",alt:"Close-up of hands on a steel window sill and the chest print"},
+    {src:"img/street-5.jpg",alt:"Close-up of washed charcoal joggers with a hand in the pocket"},
+    {src:"img/street-6.jpg",alt:"Model seen through a steel-framed glass partition"},
+    {src:"img/street-7.jpg",alt:"Full look standing in the loft"},
+    {src:"img/street-8.jpg",alt:"Close-up portrait with the cat logo"},
+    {src:"img/street-9.jpg",alt:"Model sitting on the concrete floor in window light"}
+   ]},
+  {ru:"Белое платье под дождём",en:"White dress in the rain",tools:"",ar:[3,4],w:340,pal:["#2A2F2C","#C9CDC8","#121513"],
+   descRu:"Бриф: одно предметное фото платья и одно фото ботильонов. Всё остальное (модель, локация, погода, настроение, стайлинг и даже винтажная машина) полностью сгенерировано, чтобы выстроить вокруг них цельную эстетику бренда.\n\nВ этом главная ценность AI-кампаний: бренду не нужна полноценная съёмка, чтобы проверить креативное направление. Двух референсов хватило, чтобы построить целый эдиториал-мир: дождливую загородную историю с одной и той же моделью в 20+ кадрах и видео к ней. Всё в едином стиле и готово к публикации.",
+   descEn:"The brief: one product photo of a dress, one of a pair of shoes. The rest (model, location, weather, mood, styling, even the vintage car) was fully generated to build a complete brand aesthetic around them.\n\nThis is the core value of AI-driven campaign visuals: a brand doesn't need a full shoot to test a creative direction. Two reference images were enough to construct an entire editorial world: a moody, rain-soaked countryside narrative with a consistent model across 20+ shots and a companion video, all visually cohesive and production-ready.",
+   frames:[
+    {src:"vid/rain-film.mp4",type:"video",poster:"vid/rain-film.jpg",alt:"Companion film: model and vintage car in a foggy field"},
+    {src:"img/rain-1.jpg",alt:"Model with red lips looking out of a rain-covered car window"},
+    {src:"img/rain-2.jpg",alt:"Model in a white ruffled dress sitting on the wet hood, seen from above"},
+    {src:"img/rain-3.jpg",alt:"Model from behind on the car hood facing a foggy field"},
+    {src:"img/rain-4.jpg",alt:"Low angle of the model on the car with brown ankle boots"},
+    {src:"img/rain-5.jpg",alt:"Model on the hood with a glass of red wine"},
+    {src:"img/rain-6.jpg",alt:"Close-up portrait with wet hair and red lips"},
+    {src:"img/rain-7.jpg",alt:"Model sitting in the driver seat of the vintage car"}
+   ]},
+  {ru:"AI-аватар для UGC",en:"AI avatar for UGC",tools:"",ar:[3,4],w:340,pal:["#5A4636","#E6D3C2","#2A211A"],
+   descRu:"Это Майя. Её не существует, но у неё есть свой паспорт: один глаз зелёный, другой карий, веснушки на переносице и рукав из пионов на руке. С такого портрета начинается любой AI-аватар. Пока лицо и детали не зафиксированы, персонаж от кадра к кадру немного плывёт, а для UGC это провал.\n\nДальше Майя просто живёт. Выходит из душа в мокрой майке, фоткается в зеркале спортзала, кусает черничный круассан прямо на улице и пьёт капучино с подругой в Майами. Всё снято как будто на айфон: жёсткое солнце, мятая постель, блик на телефоне. Студийный свет здесь всё бы испортил, потому что UGC работает, только когда похож на пост живого человека.\n\nТакой креатор не устаёт, не уходит к конкурентам и завтра может оказаться в Лондоне или Дубае, если так нужно бренду.",
+   descEn:"Meet Maya. She doesn't exist, but she has a passport: one green eye and one amber, freckles across her nose and a peony sleeve tattoo. Every AI avatar starts with a portrait like this one. Until the face and those details are locked, the character drifts a little from shot to shot, and for UGC that's a dealbreaker.\n\nThen Maya just lives her life. She walks out of the shower in a soaked tank top, takes gym mirror selfies, bites into a blueberry croissant on the sidewalk and grabs a cappuccino with a friend in Miami. It all looks shot on an iPhone: harsh sun, a messy bed, glare on the phone case. Studio light would kill it, because UGC only works when it looks like a real person's post.\n\nA creator like this never gets tired, never signs with your competitor and can be in London or Dubai tomorrow if the brand needs her.",
+   frames:[
+    {src:"img/ugc-1.jpg",alt:"Neutral reference portrait of the avatar: green and amber eyes, freckles"},
+    {src:"img/ugc-2.jpg",alt:"Laughing in a doorway after a shower, wet hair and tank top"},
+    {src:"img/ugc-3.jpg",alt:"Sitting on a bed in a burgundy dress, fastening her heel"},
+    {src:"img/ugc-4.jpg",alt:"Top-down shot biting a blueberry pastry on the street"},
+    {src:"img/ugc-6.jpg",alt:"Gym mirror selfie in a grey sports bra"},
+    {src:"img/ugc-7.jpg",alt:"Sitting at a Miami cafe table in a black turtleneck"},
+    {src:"img/ugc-8.jpg",alt:"Morning selfie lying on white sheets"},
+    {src:"img/ugc-9.jpg",alt:"Selfie with a friend over cappuccinos in Miami"},
+    {src:"img/ugc-10.jpg",alt:"Smiling while slicing an apple in a bright kitchen"}
+   ]},
+  {ru:"Каталог зоотоваров",en:"Pet product catalog",tools:"",ar:[3,4],w:340,pal:["#E9836E","#F6C2B3","#9C4A3A"],
+   descRu:"Кто снимал животных, знает: половина съёмочного дня уходит на уговоры. Бордер-колли ловит фрисби с двадцатой попытки, кот смотрит куда угодно, только не в камеру, а плюшевая утка к обеду уже мокрая и без крыла. Найти борзую или ориентального кота под конкретный товар отдельный квест, и каждый час студии стоит денег.\n\nЗдесь восемь пород и восемь товаров, и все кадры живут в одном стиле: однотонный фон в тон товару и фирменная линия, которая петляет за каждым питомцем. Новый товар можно добавить в каталог без новой съёмки, и он будет выглядеть так же, как остальные. Ни одна утка не пострадала.",
+   descEn:"Anyone who has shot animals knows half the day goes on negotiations. The border collie catches the frisbee on the twentieth try, the cat looks anywhere but the lens, and by lunch the plush duck is soggy and missing a wing. Finding a borzoi or an Oriental cat for one specific product is a quest of its own, and every studio hour costs money.\n\nHere there are eight breeds and eight products, and every frame lives in one style: a solid background matched to the product and a brand line that loops behind each pet. A new product can join the catalog without a new shoot and still look like it belongs. No ducks were harmed.",
+   frames:[
+    {src:"img/pet-1.jpg",alt:"Border collie catching an orange frisbee mid-air on a coral background"},
+    {src:"img/pet-2.jpg",alt:"Borzoi lying down with a green duck toy"},
+    {src:"img/pet-3.jpg",alt:"Oriental cat batting a felt football"},
+    {src:"img/pet-4.jpg",alt:"Whippet watching a treat fly past"},
+    {src:"img/pet-5.jpg",alt:"Giant schnauzer holding a yellow duck toy"},
+    {src:"img/pet-6.jpg",alt:"French bulldog chewing a green dental toy"},
+    {src:"img/pet-7.jpg",alt:"British shorthair peeking out of a felt cat house"},
+    {src:"img/pet-8.jpg",alt:"Alaskan malamute holding a plush sloth toy"}
+   ]},
+  {ru:"Предметная съёмка кондиционера",en:"Conditioner product shoot",tools:"",ar:[3,4],w:340,pal:["#EDE6DA","#FFFFFF","#8C7E6A"],
+   descRu:"Одна бутылка кондиционера и шесть разных миров: левитация, мох, пена, золотая струя и жёсткое солнце.\n\nНа живой съёмке каждый такой кадр это отдельный день: лески для левитации, двадцать дублей с пеной и стол, залитый маслом с первой попытки. Здесь мир вокруг продукта меняется сколько угодно раз, а этикетка и флакон остаются точными в каждом кадре.",
+   descEn:"One bottle of conditioner and six different worlds: levitation, moss, foam, a golden pour and hard sunlight.\n\nOn a real shoot each of these frames is a separate day: fishing line for the levitation, twenty takes of foam and a table flooded with oil on take one. Here the world around the product changes as often as you like, while the label and the bottle stay exact in every frame.",
+   frames:[
+    {src:"img/product-1.jpg",alt:"Conditioner bottles levitating with soap, a loofah, a towel and a wooden brush"},
+    {src:"img/product-2.jpg",alt:"Bottle standing in moss with fern and wet leaves"},
+    {src:"img/product-3.jpg",alt:"Bottle covered in soap foam on a wet surface"},
+    {src:"img/product-4.jpg",alt:"Golden liquid pouring over a tilted bottle on a brush and soap blocks"},
+    {src:"img/product-5.jpg",alt:"Top-down view of bottles casting long shadows in hard sunlight"},
+    {src:"img/product-6.jpg",alt:"Two bottles wrapped in a long green leaf"}
+   ]}
+].map(s=>({...s,frames:Array.isArray(s.frames)?s.frames.map(f=>({type:"image",...f})):Array.from({length:s.frames},()=>({src:"",type:s.video?"video":"image",alt:""}))}));
+
+(function(){
+  const root=document.documentElement, main=document.querySelector('main');
+  const L=()=>root.dataset.lang||'ru';
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const T={frames:{ru:n=>n+' '+(n%10===1&&n%100!==11?'кадр':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'кадра':'кадров')),en:n=>n+' frames'},
+           video:{ru:'видео',en:'film'}};
+
+  function countLabel(s){
+    const v=s.frames.filter(f=>f.type==='video').length,i=s.frames.length-v;
+    if(v&&i)return L()==='ru'?i+' фото, '+v+' видео':i+' photos, '+v+(v===1?' film':' films');
+    if(v===1&&!i)return T.video[L()];
+    return T.frames[L()](s.frames.length);
+  }
+  /* paint a frame element with placeholder light or real media */
+  function paint(el,s,fi,opt){opt=opt||{};
+    const f=s.frames[fi]; el.innerHTML=''; el.classList.remove('has-media');
+    if(f.src){
+      el.classList.add('has-media');
+      if(f.type==='video'){const v=document.createElement('video');v.src=f.src;if(f.poster)v.poster=f.poster;v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=!reduce.matches;v.preload=opt.controls?'auto':'metadata';
+        if(opt.controls){v.controls=true;v.style.objectFit='contain';v.style.background='#000'}else{v.setAttribute('aria-hidden','true')}
+        el.appendChild(v);if(v.autoplay)v.play().catch(()=>{})}
+      else{const im=document.createElement('img');im.src=f.src;im.alt=f.alt||s[L()];im.loading='lazy';el.appendChild(im)}
+    }else{
+      const p=s.pal, k=fi*37+s.ar[0]*11;
+      el.style.setProperty('--f1',p[0]);el.style.setProperty('--f2',p[1]);el.style.setProperty('--f3',p[2]);
+      el.style.setProperty('--px',(18+k%62)+'%');el.style.setProperty('--py',(12+(k*7)%42)+'%');
+      el.style.setProperty('--qx',(30+(k*13)%60)+'%');el.style.setProperty('--sx',(30+(k*3)%40)+'%');
+      el.style.setProperty('--sw',(34+(k*5)%26)+'%');
+      if(s.video){const pl=document.createElement('span');pl.className='play';pl.innerHTML='<i></i>';el.appendChild(pl)}
+    }
+    el.style.setProperty('--ar',s.ar[0]+'/'+s.ar[1]);
+  }
+
+  /* strip */
+  const track=document.getElementById('track');
+  SERIES.forEach((s,i)=>{
+    const b=document.createElement('button');b.type='button';b.className='work';b.dataset.s=i;
+    b.style.setProperty('--w',s.w+'px');b.style.setProperty('--ar',s.ar[0]+'/'+s.ar[1]);
+    b.innerHTML='<span class="frame"></span><span class="ttl"></span><span class="mono"><span class="meta"></span><span class="cnt"></span></span>';
+    paint(b.querySelector('.frame'),s,0);
+    b.querySelector('.frame').insertAdjacentHTML('beforeend','<span class="zoom"></span>');
+    b.addEventListener('click',()=>openSeries(i,b.querySelector('.frame'),b));
+    track.appendChild(b);
+  });
+  function labelStrip(){
+    track.querySelectorAll('.work').forEach(b=>{const s=SERIES[b.dataset.s];
+      b.querySelector('.ttl').textContent=s[L()];
+      b.querySelector('.meta').textContent=[s.ar.join(':'),s.dur,s.tools].filter(Boolean).join(' / ');
+      b.querySelector('.cnt').textContent=countLabel(s);
+      b.setAttribute('aria-label',s[L()]+', '+countLabel(s));});
+  }
+
+  /* hero stack */
+  const stack=document.querySelector('.stack');
+  const sFrames=[...stack.querySelectorAll('.frame')];
+  sFrames.forEach(el=>paint(el,SERIES[+el.dataset.s],0));
+  function topFrame(){const fr=[...stack.querySelectorAll('.frame')];return fr[fr.length-1]}
+  function labelStack(){const s=SERIES[+topFrame().dataset.s];
+    stack.querySelector('.cap-t').textContent=s[L()];stack.querySelector('.cap-n').textContent=countLabel(s);
+    stack.setAttribute('aria-label',s[L()])}
+  stack.addEventListener('click',()=>{const t=topFrame();openSeries(+t.dataset.s,t,stack)});
+
+  /* language */
+  function readLang(){try{return localStorage.getItem('af-lang')}catch(e){return null}}
+  function saveLang(l){try{localStorage.setItem('af-lang',l)}catch(e){}}
+  function applyLang(l){
+    root.dataset.lang=l;root.lang=l;
+    document.querySelectorAll('[data-set-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.setLang===l)));
+    labelStrip();labelStack();if(lb.cur!=null)labelLb();
+    if(window.ScrollTrigger)ScrollTrigger.refresh();
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(b=>b.addEventListener('click',()=>{
+    const l=b.dataset.setLang;if(l===L())return;
+    main.classList.add('switching');
+    setTimeout(()=>{applyLang(l);saveLang(l);requestAnimationFrame(()=>main.classList.remove('switching'))},180);
+  }));
+
+  /* copy */
+  document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',()=>{
+    const el=document.getElementById(btn.dataset.copy),text=el.textContent.trim();
+    const done=()=>{const old=btn.innerHTML;btn.textContent=L()==='ru'?'Скопировано':'Copied';setTimeout(()=>{btn.innerHTML=old},1400)};
+    const fallback=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+    try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
+  }));
+
+  /* ===== series viewer ===== */
+  const lbEl=document.getElementById('lb'),grid=document.getElementById('lb-grid'),single=document.getElementById('lb-single'),
+        stage=document.getElementById('lb-stage'),thumbs=document.getElementById('lb-thumbs'),count=document.getElementById('lb-count'),
+        body=lbEl.querySelector('.lb-body');
+  const lb={cur:null,idx:0,mode:'grid',opener:null};
+  const G=()=>window.gsap&&!reduce.matches;
+
+  function flipFrom(el,fromRect,dur){
+    if(!G()||!fromRect)return;
+    const b=el.getBoundingClientRect(); if(!b.width)return;
+    gsap.fromTo(el,{x:fromRect.left-b.left,y:fromRect.top-b.top,scaleX:fromRect.width/b.width,scaleY:fromRect.height/b.height,transformOrigin:'0 0'},
+      {x:0,y:0,scaleX:1,scaleY:1,duration:dur||.65,ease:'expo.out',clearProps:'transform'});
+  }
+  function labelLb(){const s=SERIES[lb.cur];
+    document.getElementById('lb-title').textContent=s[L()];
+    const one=s.frames.length===1;
+    document.getElementById('lb-meta').textContent=[s.ar.join(':'),s.dur,s.tools,one?'':countLabel(s)].filter(Boolean).join(' / ');
+    count.textContent=(lb.idx+1)+' / '+s.frames.length;
+    const d=document.getElementById('lb-desc'),txt=L()==='ru'?s.descRu:s.descEn;
+    d.textContent=txt||'';d.hidden=!txt;
+    lbEl.classList.toggle('one',one);lbEl.classList.toggle('split',!one&&!!txt);}
+  function buildGrid(){const s=SERIES[lb.cur];grid.innerHTML='';
+    const r=s.ar[0]/s.ar[1];grid.style.setProperty('--cw',(r<.7?170:r>1.2?340:r===1?260:230)+'px');
+    s.frames.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.className='cellf';
+      b.setAttribute('aria-label',(i+1)+' / '+s.frames.length);
+      const fr=document.createElement('span');fr.className='frame';paint(fr,s,i);b.appendChild(fr);
+      if(f.type==='video'&&f.src)fr.insertAdjacentHTML('beforeend','<span class="play-sm" aria-hidden="true"></span>');
+      b.addEventListener('click',()=>showSingle(i,fr.getBoundingClientRect()));grid.appendChild(b)});}
+  function buildThumbs(){const s=SERIES[lb.cur];thumbs.innerHTML='';
+    s.frames.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--ar',s.ar.join('/'));
+      b.setAttribute('aria-label',(i+1)+' / '+s.frames.length);
+      const fr=document.createElement('span');fr.className='frame';paint(fr,s,i);b.appendChild(fr);
+      b.addEventListener('click',()=>go(i));thumbs.appendChild(b)});}
+  function setMode(m){lb.mode=m;lbEl.dataset.mode=m;
+    lbEl.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===m)));
+    grid.hidden=m!=='grid';single.hidden=m!=='single';if(lb.cur!=null)labelLb();}
+  function renderStage(dir){const s=SERIES[lb.cur];
+    stage.style.setProperty('--ar',s.ar.join('/'));stage.style.setProperty('--arw',s.ar[0]);stage.style.setProperty('--arh',s.ar[1]);
+    let fr=stage.querySelector('.frame');if(!fr){fr=document.createElement('span');fr.className='frame';stage.appendChild(fr)}
+    paint(fr,s,lb.idx,{controls:true});
+    thumbs.querySelectorAll('button').forEach((b,i)=>{b.setAttribute('aria-current',String(i===lb.idx));if(i===lb.idx)b.scrollIntoView({block:'nearest',inline:'nearest'})});
+    single.querySelector('[data-step="-1"]').disabled=lb.idx===0;
+    single.querySelector('[data-step="1"]').disabled=lb.idx===s.frames.length-1;
+    labelLb();
+    if(dir&&G())gsap.fromTo(fr,{x:dir*36,autoAlpha:0,filter:'blur(4px)'},{x:0,autoAlpha:1,filter:'blur(0px)',duration:.45,ease:'expo.out',clearProps:'filter,transform'});
+    return fr;}
+  function showSingle(i,fromRect){lb.idx=i;setMode('single');buildThumbs();const fr=renderStage(0);flipFrom(fr,fromRect,.6);}
+  function showGrid(){setMode('grid');if(G())gsap.from(grid.children,{y:16,autoAlpha:0,duration:.45,stagger:.035,ease:'expo.out',clearProps:'all'})}
+  function go(i){const n=SERIES[lb.cur].frames.length;if(i<0||i>=n||i===lb.idx)return;const dir=i>lb.idx?1:-1;lb.idx=i;renderStage(dir)}
+
+  function openSeries(si,originEl,opener){
+    lb.cur=si;lb.idx=0;lb.opener=opener||originEl;
+    const fromRect=originEl.getBoundingClientRect();
+    const single1=SERIES[si].frames.length===1;
+    buildGrid();body.scrollTop=0;
+    if(single1){lb.idx=0;setMode('single');buildThumbs();}else setMode('grid');
+    labelLb();
+    lbEl.hidden=false;root.style.overflow='hidden';
+    if(single1&&!G())renderStage(0);
+    lbEl.querySelector('.lb-close').focus({preventScroll:true});
+    if(G()){
+      gsap.fromTo(lbEl,{autoAlpha:0},{autoAlpha:1,duration:.22,ease:'power1.out'});
+      if(single1){lbEl.hidden=false;const fr=renderStage(0);flipFrom(fr,fromRect,.7);}
+      else{const cells=[...grid.querySelectorAll('.frame')];flipFrom(cells[0],fromRect,.7);}
+      gsap.from([...grid.children].slice(1),{y:24,autoAlpha:0,duration:.55,stagger:.045,delay:.12,ease:'expo.out',clearProps:'all'});
+      gsap.from(lbEl.querySelector('.lb-top'),{y:-10,autoAlpha:0,duration:.4,delay:.1,ease:'expo.out',clearProps:'all'});
+    }
+  }
+  function closeLb(){
+    const fin=()=>{lbEl.hidden=true;root.style.overflow='';lb.cur=null;stage.innerHTML='';if(lb.opener)lb.opener.focus({preventScroll:true})};
+    if(G())gsap.to(lbEl,{autoAlpha:0,duration:.16,ease:'power1.in',onComplete:()=>{fin();gsap.set(lbEl,{clearProps:'all'})}});else fin();
+  }
+  lbEl.querySelector('.lb-close').addEventListener('click',closeLb);
+  lbEl.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+    if(b.dataset.mode===lb.mode)return;
+    if(b.dataset.mode==='grid')showGrid();else showSingle(lb.idx,null);}));
+  single.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>go(lb.idx+ +b.dataset.step)));
+  document.addEventListener('keydown',e=>{
+    if(lbEl.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();(lb.mode==='single'&&!lbEl.classList.contains('one'))?showGrid():closeLb()}
+    else if(lb.mode==='single'&&e.key==='ArrowRight')go(lb.idx+1);
+    else if(lb.mode==='single'&&e.key==='ArrowLeft')go(lb.idx-1);
+    else if(e.key==='Tab'){const f=[...lbEl.querySelectorAll('button:not([disabled])')].filter(x=>x.offsetParent!==null);
+      if(!f.length)return;const a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+  });
+  /* swipe in single view: distance or a quick flick */
+  let sx=null,st=0,swiped=false;
+  stage.addEventListener('pointerdown',e=>{sx=e.clientX;st=performance.now()});
+  stage.addEventListener('pointerup',e=>{if(sx==null)return;const dx=e.clientX-sx,v=Math.abs(dx)/(performance.now()-st);sx=null;
+    swiped=Math.abs(dx)>12;if(Math.abs(dx)>60||v>.4&&swiped)go(lb.idx+(dx<0?1:-1));});
+  stage.addEventListener('click',e=>{if(swiped){swiped=false;return}const r=stage.getBoundingClientRect();go(lb.idx+(e.clientX>r.left+r.width/2?1:-1))});
+
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);const t=id==='top'?document.body:document.getElementById(id);if(!t)return;
+    e.preventDefault();const y=id==='top'?0:t.getBoundingClientRect().top+window.scrollY-(id==='work'?0:68);
+    window.scrollTo({top:y,behavior:reduce.matches?'auto':'smooth'});
+  }));
+
+  document.querySelectorAll('.qa button').forEach(btn=>btn.addEventListener('click',()=>{
+    const qa=btn.closest('.qa'),open=qa.dataset.open!=='true';
+    qa.dataset.open=String(open);btn.setAttribute('aria-expanded',String(open));
+  }));
+
+  /* background films: phones only autoplay muted inline video, and some block it until the first tap */
+  const ensureMuted=v=>{v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','')};
+  const tryPlay=v=>{ensureMuted(v);const p=v.play();if(p&&p.catch)p.catch(()=>{v.dataset.blocked='1';const b=v.parentElement.querySelector('.vplay');if(b)b.hidden=false})};
+  const bgv=document.querySelector('.contact-bg');
+  if(bgv){
+    ensureMuted(bgv);
+    const btn=document.createElement('button');btn.type='button';btn.className='vplay';btn.hidden=true;btn.setAttribute('aria-label','Play video');
+    btn.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    bgv.parentElement.appendChild(btn);
+    let inView=false,swapped=false,dog;
+    const playing=()=>!bgv.paused&&bgv.readyState>2;
+    /* some hosts serve video without byte ranges, which iOS refuses; a blob copy plays anywhere */
+    const swapToBlob=()=>{if(swapped)return;swapped=true;fetch(bgv.currentSrc||bgv.src).then(r=>r.blob()).then(bl=>{bgv.src=URL.createObjectURL(bl);ensureMuted(bgv);bgv.load();if(inView)go()}).catch(()=>{})};
+    const go=()=>{ensureMuted(bgv);const p=bgv.play();if(p&&p.then)p.then(()=>{btn.hidden=true}).catch(()=>{});
+      clearTimeout(dog);dog=setTimeout(()=>{if(inView&&!playing()){if(bgv.readyState<2)swapToBlob();btn.hidden=false}},2500)};
+    bgv.addEventListener('playing',()=>{btn.hidden=true});
+    bgv.addEventListener('error',swapToBlob);
+    btn.addEventListener('click',go);
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(es=>es.forEach(e=>{inView=e.isIntersecting;if(inView)go();else{bgv.pause();clearTimeout(dog)}}),{threshold:.1}).observe(bgv.parentElement);
+    }else{inView=true;go()}
+    /* strict phones (low power mode) need a tap: any touch near the finale starts it */
+    const unlock=()=>{if(inView&&!playing())go()};
+    document.addEventListener('touchend',unlock,{passive:true});
+    document.addEventListener('click',unlock);
+  }
+  /* same treatment for film previews in the cases strip */
+  if('IntersectionObserver' in window){
+    const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){ensureMuted(v);const p=v.play();if(p&&p.catch)p.catch(()=>{})}else v.pause()}),{threshold:.2});
+    document.querySelectorAll('.track video').forEach(v=>vio.observe(v));
+  }
+
+  /* where do we start: hover a line to open it; tap on touch */
+  (()=>{
+    const rows=[...document.querySelectorAll('.srow')];
+    const fine=matchMedia('(hover:hover) and (pointer:fine) and (min-width:901px)');
+    const setOpen=(row,open)=>{row.classList.toggle('on',open);row.querySelector('.shead').setAttribute('aria-expanded',String(open))};
+    rows.forEach(row=>{
+      row.querySelector('.shead').addEventListener('click',()=>{const open=!row.classList.contains('on');rows.forEach(r=>setOpen(r,false));setOpen(row,open)});
+      row.addEventListener('mouseenter',()=>{if(fine.matches)rows.forEach(r=>setOpen(r,r===row))});
+    });
+    const box=document.querySelector('.starts');
+    if(box)box.addEventListener('mouseleave',()=>{if(fine.matches)rows.forEach(r=>setOpen(r,false))});
+  })();
+
+  /* about statement: wrap each word so it can light up while scrolling */
+  document.querySelectorAll('.statement > span[lang]').forEach(sp=>{
+    const walk=node=>{[...node.childNodes].forEach(ch=>{
+      if(ch.nodeType===3){const frag=document.createDocumentFragment();ch.textContent.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part))frag.appendChild(document.createTextNode(part));else{const w=document.createElement('span');w.className='w';w.textContent=part;frag.appendChild(w)}});ch.replaceWith(frag)}
+      else if(ch.nodeType===1)walk(ch)})};
+    walk(sp);
+  });
+
+  (()=>{
+    const st=document.querySelector('.statement');if(!st)return;
+    if(matchMedia('(min-width: 900px)').matches||reduce.matches||!('IntersectionObserver' in window))return;
+    st.querySelectorAll(':scope > span[lang]').forEach(sp=>sp.querySelectorAll('.w').forEach((w,i)=>w.style.setProperty('--i',i)));
+    st.classList.add('wr');
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){st.classList.add('lit');io.disconnect()}}),{threshold:.35});
+    io.observe(st);
+  })();
+
+  /* init language */
+  applyLang(readLang()||((navigator.language||'').toLowerCase().startsWith('ru')?'ru':'en'));
+
+  /* ===== page motion ===== */
+  if(!window.gsap)return;
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ignoreMobileResize:true});
+  const mm=gsap.matchMedia();
+  mm.add({motion:"(prefers-reduced-motion: no-preference)",desktop:"(min-width: 900px)"},(ctx)=>{
+    const {motion,desktop}=ctx.conditions;if(!motion)return;
+
+    /* arrival: headline rises line by line, frames are dealt onto the table */
+    const rest=[{r:-6,x:-18,y:10},{r:4,x:14,y:4},{r:0,x:0,y:0}];
+    const tl=gsap.timeline({defaults:{ease:"expo.out"}});
+    tl.from('.hero h1 .ln>span',{yPercent:110,duration:1.1,stagger:.1})
+      .from('.hero .lede, .hero .ctas',{y:16,autoAlpha:0,duration:.8,stagger:.08},"-=.8")
+      .fromTo(sFrames,{y:80,rotation:0,autoAlpha:0},{y:i=>rest[i].y,x:i=>rest[i].x,rotation:i=>rest[i].r,autoAlpha:1,duration:1,stagger:.12},"-=1")
+      .from('.stack-cap',{autoAlpha:0,duration:.4},"-=.4");
+
+    /* the stack reshuffles: each pass shows another series */
+    function shuffle(){
+      if(!lbEl.hidden)return;
+      const cur=[...stack.querySelectorAll('.frame')],top=cur[cur.length-1];
+      gsap.timeline()
+        .to(top,{xPercent:58,rotation:10,duration:.45,ease:"power2.in"})
+        .add(()=>{stack.insertBefore(top,stack.firstChild);
+          [...stack.querySelectorAll('.frame')].forEach((el,pos)=>gsap.to(el,{x:rest[pos].x,y:rest[pos].y,rotation:rest[pos].r,duration:.7,ease:"expo.out"}));
+          labelStack();})
+        .to(top,{xPercent:0,duration:.6,ease:"expo.out"});
+    }
+    const loop=gsap.delayedCall(4.2,function rep(){shuffle();loop.restart(true)});
+
+    if(desktop){
+      /* vertical scroll slides the strip sideways */
+      const dist=()=>Math.max(0,track.scrollWidth-window.innerWidth);
+      gsap.to(track,{x:()=>-dist(),ease:"none",onUpdate:()=>{if(window.__pickCase)window.__pickCase()},scrollTrigger:{id:'pan',trigger:'.works',start:"top top",end:()=>"+="+dist()*1.8,pin:true,anticipatePin:1,scrub:.8,invalidateOnRefresh:true}});
+    }
+    gsap.from('.qa',{y:20,autoAlpha:0,duration:.7,stagger:.06,ease:'expo.out',scrollTrigger:{trigger:'.qa-list',start:'top 85%',once:true}});
+    if(desktop)document.querySelectorAll('.statement > span[lang]').forEach(sp=>{
+      gsap.fromTo(sp.querySelectorAll('.w'),{opacity:.14},{opacity:1,ease:'none',stagger:.08,scrollTrigger:{trigger:'.statement',start:'top 78%',end:'bottom 42%',scrub:.6}});
+    });
+    return()=>loop.kill();
+  });
+
+  /* ===== chameleon: while the cases are on screen, the whole site takes the colour of the case in view ===== */
+  const THEMES=[
+    {bg:'#0B1F1A',surface:'#12302A',fg:'#E3EFEA',muted:'#8FB3A6',line:'#1F4038',accent:'#FF6A4D','accent-ink':'#FF7C61','on-accent':'#0B1F1A'},
+    {bg:'#D9D6CC',surface:'#E6E3DA',fg:'#1F1E1A',muted:'#5E5B50',line:'#C4C0B4',accent:'#B23A1E','accent-ink':'#A3341A','on-accent':'#F7F4EE'},
+    {bg:'#2A1C17',surface:'#3A2620',fg:'#F1E7DF',muted:'#BFA699',line:'#4A3129',accent:'#E2483A','accent-ink':'#F0705F','on-accent':'#FFF6F2'},
+    {bg:'#1E2321',surface:'#2A302D',fg:'#E6E9E6',muted:'#9DA7A2',line:'#36403B',accent:'#D9343F','accent-ink':'#F05A62','on-accent':'#FFF5F5'},
+    {bg:'#EBDDD0',surface:'#F3E8DE',fg:'#2A1E17',muted:'#6D5547',line:'#D8C3B2',accent:'#B2391E','accent-ink':'#A3341A','on-accent':'#FBF3EC'},
+    {bg:'#EE8C76',surface:'#F3A390',fg:'#2A1410',muted:'#5C2E25',line:'#E07962',accent:'#2A1410','accent-ink':'#2A1410','on-accent':'#F7E4DE'},
+    {bg:'#ECE5DA',surface:'#F4EFE7',fg:'#1E1B17',muted:'#6B6257',line:'#D6CCBE',accent:'#B2321A','accent-ink':'#A62F18','on-accent':'#FBF7F5'}
+  ];
+  const TOK=['bg','surface','fg','muted','line','accent','accent-ink','on-accent'];
+  /* colours follow the scroll continuously: the next case's colour washes in as a soft gradient */
+  const layer=document.createElement('div');layer.className='cham-bg';layer.setAttribute('aria-hidden','true');document.body.prepend(layer);
+  const hex=h=>{h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return[n>>16&255,n>>8&255,n&255]};
+  const mix=(a,b,t)=>{const A=hex(a),B=hex(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
+  const smooth=(e0,e1,x)=>{const t=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return t*t*(3-2*t)};
+  const clamp=x=>Math.min(1,Math.max(0,x));
+  let base=null,painted=false,ticking=false;
+  function readBase(){const cs=getComputedStyle(root),o={};TOK.forEach(t=>o[t]=cs.getPropertyValue('--'+t).trim());return o}
+  const panEl=document.querySelector('.pan'),worksEl=document.querySelector('.works');
+  function panProgress(){
+    if(getComputedStyle(panEl).overflowX!=='visible'){const m=panEl.scrollWidth-panEl.clientWidth;return m>0?panEl.scrollLeft/m:0}
+    const dist=Math.max(1,track.scrollWidth-window.innerWidth);return clamp(-(window.gsap?gsap.getProperty(track,'x'):0)/dist);
+  }
+  function ranges(){
+    const vh=window.innerHeight,pt=window.ScrollTrigger&&ScrollTrigger.getById('pan');
+    if(pt)return{e0:pt.start-vh*.8,e1:pt.start,x0:pt.end,x1:pt.end+vh*.7};
+    const top=worksEl.getBoundingClientRect().top+window.scrollY,bot=top+worksEl.offsetHeight;
+    return{e0:top-vh,e1:top-vh*.25,x0:bot-vh*.6,x1:bot-vh*.6+vh*.7};
+  }
+  function clearPaint(){if(!painted)return;painted=false;TOK.forEach(t=>root.style.removeProperty('--'+t));layer.style.opacity='0'}
+  function render(){
+    ticking=false;
+    const y=window.scrollY,r=ranges(),pIn=clamp((y-r.e0)/(r.e1-r.e0)),pOut=clamp((y-r.x0)/(r.x1-r.x0));
+    if(pIn<=0||pOut>=1){clearPaint();return}
+    if(!painted)base=readBase();
+    const n=THEMES.length,x=panProgress()*(n-1),k=Math.min(n-2,Math.floor(x)),f=x-k;
+    let A,B,t,vertical=false;
+    if(pIn<1){A=base;B=THEMES[Math.round(x)];t=pIn;vertical=true}
+    else if(pOut>0){A=THEMES[Math.round(x)];B=base;t=pOut;vertical=true}
+    else{A=THEMES[k];B=THEMES[k+1];t=f}
+    const tt=smooth(.3,.7,t);
+    TOK.forEach(tok=>root.style.setProperty('--'+tok,mix(A[tok],B[tok],tt)));
+    const edge=(1.4-1.8*t)*100,soft=40;
+    layer.style.background=`linear-gradient(${vertical?'0deg':'100deg'},${vertical?B.bg:A.bg} 0%,${vertical?B.bg:A.bg} ${(vertical?100-edge:edge)-soft}%,${vertical?A.bg:B.bg} ${(vertical?100-edge:edge)+soft}%,${vertical?A.bg:B.bg} 100%)`;
+    if(vertical){layer.style.background=`linear-gradient(0deg,${B.bg} 0%,${B.bg} ${(t*180-40)-soft}%,${A.bg} ${(t*180-40)+soft}%,${A.bg} 100%)`}
+    layer.style.opacity='1';painted=true;
+  }
+  const schedule=()=>{if(!ticking){ticking=true;requestAnimationFrame(render)}};
+  window.__pickCase=schedule;
+  panEl.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  if(window.ScrollTrigger)ScrollTrigger.create({trigger:'.works',start:'top bottom',end:'bottom top',refreshPriority:-1,onUpdate:schedule,onToggle:schedule,onRefresh:schedule});
+  if(window.ScrollTrigger)ScrollTrigger.create({trigger:'#formats',start:'top bottom',end:'top top',refreshPriority:-1,onUpdate:schedule,onToggle:schedule});
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{painted=false;TOK.forEach(t=>root.style.removeProperty('--'+t));schedule()});
+  window.addEventListener('load',()=>ScrollTrigger.refresh());
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());
+})();
+</script>
+
+</body></html>
