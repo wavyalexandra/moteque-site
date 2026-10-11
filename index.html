@@ -322,6 +322,17 @@ footer{border-top:1px solid var(--line);margin-top:56px;color:var(--muted);paddi
   .lb:not(.one) .lb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-block:8px 32px}
   .lb:not(.one) .lb-grid.wide{grid-template-columns:minmax(0,1fr)}
   .lb:not(.one) .lb-single{min-height:0;padding-top:8px}
+  /* single film case: same order as the others, text on top, film below */
+  .lb.one{display:block;overflow-y:auto;overscroll-behavior:contain;padding:0}
+  .lb.one .lb-top{display:flex;flex-direction:column;gap:16px;padding:18px var(--gut) 8px}
+  .lb.one .lb-ctrl{position:static;order:-1;min-height:44px}
+  .lb.one .lb-close{position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);right:var(--gut);z-index:3;background:var(--bg)}
+  .lb.one .lb-top h2{font-size:24px}
+  .lb.one .lb-desc{font-size:15px;margin-top:14px}
+  .lb.one .lb-body{display:block;overflow:visible;order:0}
+  .lb.one .lb-single{display:block;min-height:0;padding:8px var(--gut) 32px}
+  .lb.one .lb-stagewrap{display:block}
+  .lb.one .lb-stage{width:100%}
 }
 @media (max-width:899px) and (prefers-reduced-motion:reduce){.swipe b{animation:none}}
 </style>
