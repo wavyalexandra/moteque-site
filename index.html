@@ -414,6 +414,14 @@ html.rv [data-rv="wipe"]>.frame:nth-child(3){transition-delay:.16s}
 .cur .cl{font:400 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--on-accent);opacity:0;transition:opacity .2s ease;white-space:nowrap}
 .cur.view .cl{opacity:1;transition-delay:.12s}
 html.cur-on,html.cur-on *{cursor:none!important}
+
+/* language switch: quiet text toggle instead of a boxed control */
+.nav .lang{border:0;gap:2px;align-items:center}
+.nav .lang button{padding:8px 6px;color:var(--muted);opacity:.7;transition:opacity .25s ease,color .25s ease}
+.nav .lang button+button::before{content:"/";display:inline-block;margin-right:8px;opacity:.5;color:var(--muted)}
+.nav .lang button[aria-pressed="true"]{background:none;color:var(--fg);opacity:1}
+.nav .lang button[aria-pressed="true"] > *,.nav .lang button[aria-pressed="true"]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+@media (hover:hover){.nav .lang button:hover{opacity:1;color:var(--fg)}}
 </style>
 </head>
 <body>
@@ -728,7 +736,7 @@ const SERIES=[
   }
 
   let lenis=null;
-  const fxQuery='(min-width: 900px) and (prefers-reduced-motion: no-preference)';
+  const fxQuery='(prefers-reduced-motion: no-preference)';
   const esc=t=>String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const pad=n=>String(n).padStart(2,'0');
   function countFor(s,l){
@@ -794,12 +802,12 @@ const SERIES=[
     ch.go=k=>{if(k===ch.cur)return;const fs=bg.querySelectorAll(':scope > .frame');fs[ch.cur].classList.remove('on');fs[k].classList.add('on');
       ths.forEach((t,j)=>t.setAttribute('aria-current',String(j===k)));ch.cur=k;if(nEl)nEl.textContent=pad(k+1)+' / '+pad(s.frames.length)};
     ths.forEach((t,k)=>{
-      t.addEventListener('click',e=>{e.stopPropagation();ch.go(k)});
+      t.addEventListener('click',e=>{e.stopPropagation();ch.go(k);openSeries(i,t,t,k)});
       t.addEventListener('mouseenter',()=>{ch.hold=true;ch.go(k)});
       t.addEventListener('mouseleave',()=>{ch.hold=false});
     });
     chState.push(ch);
-    const open=()=>openSeries(i,ths[ch.cur]||bg,bg);
+    const open=()=>openSeries(i,bg,bg,ch.n>1?ch.cur:null);
     bg.addEventListener('click',open);
     bg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
     sec.querySelector('.ch-open').addEventListener('click',()=>openSeries(i,bg,sec.querySelector('.ch-open')));
@@ -913,21 +921,22 @@ const SERIES=[
 
   /* the case grows out of the frame you clicked, and shrinks back into it */
   const insetOf=r=>`inset(${Math.max(0,r.top)}px ${Math.max(0,innerWidth-r.right)}px ${Math.max(0,innerHeight-r.bottom)}px ${Math.max(0,r.left)}px round 6px)`;
-  function openSeries(si,originEl,opener){
+  function openSeries(si,originEl,opener,start){
     lb.cur=si;lb.idx=0;lb.full=false;lbEl.scrollTop=0;lb.opener=opener||originEl;lb.origin=originEl;
     Object.entries(themeOf(SERIES[si])).forEach(([k,v])=>lbEl.style.setProperty('--'+k,v));
     const cu=document.querySelector('.cur');if(cu)cu.classList.remove('view');
     const fromRect=originEl.getBoundingClientRect();
     const single1=SERIES[si].frames.length===1;
+    const one=single1||start!=null;
     buildGrid();body.scrollTop=0;
-    if(single1){lb.idx=0;setMode('single');buildThumbs();}else setMode('grid');
+    if(one){lb.idx=single1?0:start;setMode('single');buildThumbs();}else setMode('grid');
     labelLb();
     lbEl.hidden=false;root.style.overflow='hidden';if(lenis)lenis.stop();
-    if(single1)renderStage(0);
+    if(one)renderStage(0);
     lbEl.querySelector('.lb-close').focus({preventScroll:true});
     if(G()){
       gsap.fromTo(lbEl,{clipPath:insetOf(fromRect)},{clipPath:'inset(0px 0px 0px 0px round 0px)',duration:.95,ease:'expo.inOut',clearProps:'clipPath'});
-      gsap.from(single1?[lbEl.querySelector('.lb-stage')]:[...grid.children],{y:50,autoAlpha:0,duration:.9,stagger:.045,delay:.38,ease:'expo.out',clearProps:'all'});
+      gsap.from(one?[lbEl.querySelector('.lb-stage')]:[...grid.children],{y:50,autoAlpha:0,duration:.9,stagger:.045,delay:.38,ease:'expo.out',clearProps:'opacity,visibility,transform'});
       gsap.from(lbEl.querySelector('.lb-top'),{y:24,autoAlpha:0,duration:.8,delay:.32,ease:'expo.out',clearProps:'all'});
     }
   }
@@ -1126,7 +1135,7 @@ const SERIES=[
 
     /* hero: the frame shrinks into a window and the headline lifts away, then the first case slides over it */
     gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:hd,start:'top bottom',end:'bottom bottom',scrub:.6}})
-      .fromTo('.hero-media',{clipPath:'inset(0% 0% 0% 0% round 0px)'},{clipPath:'inset(9% 16% 9% 16% round 22px)'},0)
+      .fromTo('.hero-media',{clipPath:'inset(0% 0% 0% 0% round 0px)'},{clipPath:innerWidth<900?'inset(7% 6% 7% 6% round 16px)':'inset(9% 16% 9% 16% round 22px)'},0)
       .to('.hero-copy',{y:-90,autoAlpha:0},0)
       .to('.hero-cap',{autoAlpha:0},0)
       .to('.hero-shade',{autoAlpha:.3},0);
