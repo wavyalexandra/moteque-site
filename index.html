@@ -344,34 +344,48 @@ html.fx .panel{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden}
 .panel::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--dim);pointer-events:none;z-index:6}
 html.fx .panel>.pi{transform-origin:50% 0%}
 
-/* chapter */
-.chapter{position:relative;background:var(--bg);color:var(--fg)}
-.chapter .pi{display:flex;align-items:center}
-.ch-grid{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,5vw,96px);align-items:center;padding-block:clamp(96px,13vh,132px) clamp(56px,9vh,96px)}
+/* chapter: the case photo fills the screen, its colour tints the side the text sits on */
+.chapter{position:relative;background:var(--bg);color:var(--fg);height:100vh;height:100svh;min-height:560px;overflow:hidden}
+.ch-bg{position:absolute;inset:0;cursor:pointer;outline-offset:-4px;isolation:isolate;z-index:0}
+.ch-bg .frame{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.3s ease;background:var(--bg)}
+.ch-bg .frame.on{opacity:1}
+.ch-bg .frame img,.ch-bg .frame video{object-position:var(--pos,50% 32%)}
+.ch-bg .frame.on img{animation:kb 8s cubic-bezier(.16,1,.3,1) both}
+.ch-bg .frame:nth-child(n+6){display:none}
+.ch-scrim{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(90deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 88%,transparent) 30%,color-mix(in srgb,var(--bg) 32%,transparent) 52%,transparent 68%),
+  linear-gradient(0deg,color-mix(in srgb,var(--bg) 55%,transparent) 0%,transparent 28%)}
+.ch-grid{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 48px;padding-block:clamp(96px,13vh,132px) clamp(32px,6vh,64px);pointer-events:none}
+.ch-grid>*{pointer-events:auto}
+.ch-copy{align-self:center;max-width:min(560px,44vw)}
 .ch-idx{color:var(--accent-ink)}
 .ch-title{font:300 clamp(36px,5vw,88px)/1 var(--display);letter-spacing:-.035em;margin-top:18px;max-width:13ch;text-wrap:balance}
 .ch-meta{margin-top:18px}
-.ch-desc{margin-top:22px;max-width:46ch;color:var(--muted);font-size:clamp(15px,1.1vw,17px);text-wrap:pretty}
-.ch-open{margin-top:30px}
-.chapter .btn-ghost{border-color:var(--fg);color:var(--fg)}
+.ch-desc{margin-top:22px;max-width:44ch;color:var(--muted);font-size:clamp(15px,1.1vw,17px);text-wrap:pretty}
+.ch-open{margin-top:30px;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.chapter .btn-ghost{border-color:var(--fg);color:var(--fg);background:color-mix(in srgb,var(--bg) 35%,transparent)}
 @media (hover:hover) and (pointer:fine){.chapter .btn-ghost:hover{background:var(--fg);color:var(--bg)}}
-.ch-stage{position:relative;display:block;cursor:pointer;height:min(74dvh,calc(46vw * var(--arh) / var(--arw)));aspect-ratio:var(--ar);max-width:100%;outline-offset:6px}
-.ch-stage .frame{position:absolute;inset:0;width:100%;height:100%;z-index:1;isolation:isolate}
-.ch-open{transition:background .2s ease,color .2s ease,border-color .2s ease}
-.ch-stage .frame:nth-child(n+5){display:none}
-.ch-count{position:absolute;right:0;bottom:-30px;color:var(--muted);font:400 12px/1 var(--mono);letter-spacing:.06em}
-.ch-bar{position:absolute;left:0;bottom:-26px;width:min(40%,180px);height:1px;background:var(--line);overflow:hidden}
-.ch-bar i{position:absolute;inset:0;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.ch-thumbs{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.ch-row{display:flex;gap:8px}
+.ch-th{all:unset;cursor:pointer;position:relative;width:58px;aspect-ratio:var(--ar);max-height:92px;overflow:hidden;opacity:.62;outline:1px solid rgba(255,255,255,.35);outline-offset:2px;transition:opacity .3s ease,outline-color .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.ch-th .frame{position:absolute;inset:0;width:100%;height:100%}
+.ch-th[aria-current="true"]{opacity:1;outline-color:#fff;transform:translateY(-4px)}
+.ch-th:focus-visible{outline:2px solid var(--accent)}
+.ch-n{font:400 12px/1 var(--mono);letter-spacing:.06em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+@media (prefers-reduced-motion:reduce){.ch-bg .frame{transition:none}.ch-bg .frame.on img{animation:none}}
 
-/* chapters without the stacking (phones, reduced motion): a coloured block with a swipeable row of frames */
-html:not(.fx) .chapter{padding-block:clamp(64px,10vw,112px)}
-html:not(.fx) .chapter .pi{display:block}
-html:not(.fx) .ch-grid{grid-template-columns:minmax(0,1fr);padding-block:0;gap:28px}
-html:not(.fx) .ch-stage{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);-webkit-overflow-scrolling:touch;height:auto;aspect-ratio:auto;width:auto;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut);scrollbar-width:none}
-html:not(.fx) .ch-stage::-webkit-scrollbar{display:none}
-html:not(.fx) .ch-stage .frame,html:not(.fx) .ch-stage .frame:nth-child(n+5){position:relative;inset:auto;display:block;flex:none;width:min(78vw,var(--mw));height:auto;aspect-ratio:var(--ar);scroll-snap-align:start}
-html:not(.fx) .ch-count,html:not(.fx) .ch-bar{display:none}
-html:not(.fx) .ch-title{font-size:clamp(34px,8vw,64px)}
+/* phones: the photo fills the screen, text sits at the bottom over the case colour */
+@media (max-width:899px){
+  .ch-scrim{background:linear-gradient(0deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 94%,transparent) 38%,color-mix(in srgb,var(--bg) 55%,transparent) 58%,transparent 78%)}
+  .ch-grid{grid-template-columns:minmax(0,1fr);align-content:end;gap:18px;padding-block:96px 28px}
+  .ch-copy{align-self:end;max-width:none}
+  .ch-title{font-size:clamp(32px,9vw,56px);margin-top:12px}
+  .ch-meta{margin-top:12px}
+  .ch-desc{margin-top:14px;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .ch-open{margin-top:20px}
+  .ch-thumbs{align-items:flex-start;flex-direction:column-reverse}
+  .ch-th{width:44px;max-height:66px}
+}
 
 /* sections after the deck sit above the contact curtain */
 .formats,.tools,.about,.faq{position:relative;z-index:1;background:var(--bg)}
@@ -677,17 +691,6 @@ const SERIES=[
     {src:"img/pet-6.jpg",alt:"French bulldog chewing a green dental toy"},
     {src:"img/pet-7.jpg",alt:"British shorthair peeking out of a felt cat house"},
     {src:"img/pet-8.jpg",alt:"Alaskan malamute holding a plush sloth toy"}
-   ]},
-  {ru:"Предметная съёмка кондиционера",en:"Conditioner product shoot",tools:"",ar:[3,4],w:340,pal:["#EDE6DA","#FFFFFF","#8C7E6A"],
-   descRu:"Одна бутылка кондиционера и шесть разных миров: левитация, мох, пена, золотая струя и жёсткое солнце.\n\nНа живой съёмке каждый такой кадр это отдельный день: лески для левитации, двадцать дублей с пеной и стол, залитый маслом с первой попытки. Здесь мир вокруг продукта меняется сколько угодно раз, а этикетка и флакон остаются точными в каждом кадре.",
-   descEn:"One bottle of conditioner and six different worlds: levitation, moss, foam, a golden pour and hard sunlight.\n\nOn a real shoot each of these frames is a separate day: fishing line for the levitation, twenty takes of foam and a table flooded with oil on take one. Here the world around the product changes as often as you like, while the label and the bottle stay exact in every frame.",
-   frames:[
-    {src:"img/product-1.jpg",alt:"Conditioner bottles levitating with soap, a loofah, a towel and a wooden brush"},
-    {src:"img/product-2.jpg",alt:"Bottle standing in moss with fern and wet leaves"},
-    {src:"img/product-3.jpg",alt:"Bottle covered in soap foam on a wet surface"},
-    {src:"img/product-4.jpg",alt:"Golden liquid pouring over a tilted bottle on a brush and soap blocks"},
-    {src:"img/product-5.jpg",alt:"Top-down view of bottles casting long shadows in hard sunlight"},
-    {src:"img/product-6.jpg",alt:"Two bottles wrapped in a long green leaf"}
    ]}
 ].map(s=>({...s,frames:Array.isArray(s.frames)?s.frames.map(f=>({type:"image",...f})):Array.from({length:s.frames},()=>({src:"",type:s.video?"video":"image",alt:""}))}));
 
@@ -744,15 +747,16 @@ const SERIES=[
     'Streetwear for a London brand':{bg:'#2A1C17',surface:'#3A2620',fg:'#F1E7DF',muted:'#BFA699',line:'#4A3129',accent:'#E2483A','accent-ink':'#F0705F','on-accent':'#FFF6F2'},
     'White dress in the rain':{bg:'#1E2321',surface:'#2A302D',fg:'#E6E9E6',muted:'#9DA7A2',line:'#36403B',accent:'#D9343F','accent-ink':'#F05A62','on-accent':'#FFF5F5'},
     'AI avatar for UGC':{bg:'#EBDDD0',surface:'#F3E8DE',fg:'#2A1E17',muted:'#6D5547',line:'#D8C3B2',accent:'#B2391E','accent-ink':'#A3341A','on-accent':'#FBF3EC'},
-    'Pet product catalog':{bg:'#EE8C76',surface:'#F3A390',fg:'#2A1410',muted:'#5C2E25',line:'#E07962',accent:'#2A1410','accent-ink':'#2A1410','on-accent':'#F7E4DE'},
-    'Conditioner product shoot':{bg:'#ECE5DA',surface:'#F4EFE7',fg:'#1E1B17',muted:'#6B6257',line:'#D6CCBE',accent:'#B2321A','accent-ink':'#A62F18','on-accent':'#FBF7F5'}
+    'Pet product catalog':{bg:'#EE8C76',surface:'#F3A390',fg:'#2A1410',muted:'#5C2E25',line:'#E07962',accent:'#2A1410','accent-ink':'#2A1410','on-accent':'#F7E4DE'}
   };
   const FALLBACK={bg:'#14201F',surface:'#1C2B2A',fg:'#E4EEEA',muted:'#8EAAA4',line:'#2A3E3C',accent:'#FF6A4D','accent-ink':'#FF7C61','on-accent':'#0C1C1E'};
   const themeOf=s=>THEMES[s.en]||FALLBACK;
 
   /* ===== chapters: one screen per case ===== */
   const deck=document.getElementById('deck'),heroEl=document.getElementById('hero');
-  const dwells=[],chapters=[];
+  const dwells=[],chapters=[],chState=[];
+  /* where to centre each case's photo when it is cropped to the screen */
+  const POS={'Lace wedding dress':'50% 28%','White dress in the rain':'50% 30%','Streetwear for a London brand':'50% 30%','AI avatar for UGC':'50% 16%','Pet product catalog':'50% 40%','Lingerie in a flooded car':'55% 45%'};
   const mkDwell=()=>{const d=document.createElement('div');d.className='dwell';d.setAttribute('aria-hidden','true');return d};
   const hd=mkDwell();heroEl.after(hd);dwells.push(hd);
   const flat=!matchMedia(fxQuery).matches;
@@ -760,27 +764,45 @@ const SERIES=[
     const sec=document.createElement('section');sec.className='chapter panel';sec.dataset.s=i;if(i===0)sec.id='work';
     Object.entries(themeOf(s)).forEach(([k,v])=>sec.style.setProperty('--'+k,v));
     sec.style.setProperty('--ar',s.ar.join('/'));sec.style.setProperty('--arw',s.ar[0]);sec.style.setProperty('--arh',s.ar[1]);
-    sec.style.setProperty('--mw',(s.ar[0]/s.ar[1]>1.2?560:340)+'px');
     const first=t=>(t||'').split('\n\n')[0];
     const rv=(kind,d)=>flat?` data-rv="${kind}" style="--d:${d}"`:'';
-    sec.innerHTML=`<div class="pi"><div class="wrap ch-grid">
-      <div class="ch-copy">
-        <p class="ch-idx mono"${rv('up',0)}>${pad(i+1)} / ${pad(SERIES.length)}</p>
-        <h2 class="ch-title"${rv('mask',1)}><span lang="ru">${esc(s.ru)}</span><span lang="en">${esc(s.en)}</span></h2>
-        <p class="ch-meta mono"${rv('up',2)}><span lang="ru">${esc(metaFor(s,'ru'))}</span><span lang="en">${esc(metaFor(s,'en'))}</span></p>
-        ${s.descRu?`<p class="ch-desc"${rv('up',3)}><span lang="ru">${esc(first(s.descRu))}</span><span lang="en">${esc(first(s.descEn))}</span></p>`:''}
-        <button type="button" class="btn btn-ghost ch-open"${rv('up',4)}><span lang="ru">Открыть кейс</span><span lang="en">Open the case</span><span aria-hidden="true">→</span></button>
+    sec.style.setProperty('--pos',POS[s.en]||(s.ar[0]/s.ar[1]>1.2?'50% 50%':'50% 30%'));
+    const shown=Math.min(5,s.frames.length);
+    sec.innerHTML=`<div class="pi">
+      <div class="ch-bg" role="button" tabindex="0" data-cursor="view"></div>
+      <div class="ch-scrim" aria-hidden="true"></div>
+      <div class="wrap ch-grid">
+        <div class="ch-copy">
+          <p class="ch-idx mono"${rv('up',0)}>${pad(i+1)} / ${pad(SERIES.length)}</p>
+          <h2 class="ch-title"${rv('mask',1)}><span lang="ru">${esc(s.ru)}</span><span lang="en">${esc(s.en)}</span></h2>
+          <p class="ch-meta mono"${rv('up',2)}><span lang="ru">${esc(metaFor(s,'ru'))}</span><span lang="en">${esc(metaFor(s,'en'))}</span></p>
+          ${s.descRu?`<p class="ch-desc"${rv('up',3)}><span lang="ru">${esc(first(s.descRu))}</span><span lang="en">${esc(first(s.descEn))}</span></p>`:''}
+          <button type="button" class="btn btn-ghost ch-open"${rv('up',4)}><span lang="ru">Открыть кейс</span><span lang="en">Open the case</span><span aria-hidden="true">→</span></button>
+        </div>
+        ${shown>1?`<div class="ch-thumbs"${rv('up',5)}><div class="ch-row"></div><span class="ch-n" aria-hidden="true">01 / ${pad(s.frames.length)}</span></div>`:''}
       </div>
-      <div class="ch-stage" role="button" tabindex="0" data-cursor="view"${rv('wipe',1)}></div>
-    </div></div>`;
-    const stageEl=sec.querySelector('.ch-stage');
-    stageEl.setAttribute('aria-label',(s.ru)+' / '+s.en);
-    s.frames.forEach((f,k)=>{const fr=document.createElement('span');fr.className='frame';paint(fr,s,k);stageEl.appendChild(fr)});
-    if(s.frames.length>1)stageEl.insertAdjacentHTML('beforeend','<span class="ch-bar" aria-hidden="true"><i></i></span><span class="ch-count" aria-hidden="true">01 / '+pad(s.frames.length)+'</span>');
-    const open=()=>openSeries(i,stageEl,stageEl);
-    stageEl.addEventListener('click',open);
-    stageEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
-    sec.querySelector('.ch-open').addEventListener('click',()=>openSeries(i,stageEl,sec.querySelector('.ch-open')));
+    </div>`;
+    const bg=sec.querySelector('.ch-bg'),row=sec.querySelector('.ch-row'),nEl=sec.querySelector('.ch-n');
+    bg.setAttribute('aria-label',s.ru+' / '+s.en);
+    const ths=[];
+    for(let k=0;k<shown;k++){
+      const fr=document.createElement('span');fr.className='frame'+(k===0?' on':'');paint(fr,s,k);bg.appendChild(fr);
+      if(row){const t=document.createElement('button');t.type='button';t.className='ch-th';t.setAttribute('aria-label',(k+1)+' / '+s.frames.length);t.setAttribute('aria-current',String(k===0));
+        const tf=document.createElement('span');tf.className='frame';paint(tf,s,k);t.appendChild(tf);row.appendChild(t);ths.push(t)}
+    }
+    const ch={sec,i,cur:0,n:shown,timer:null,hold:false};
+    ch.go=k=>{if(k===ch.cur)return;const fs=bg.querySelectorAll(':scope > .frame');fs[ch.cur].classList.remove('on');fs[k].classList.add('on');
+      ths.forEach((t,j)=>t.setAttribute('aria-current',String(j===k)));ch.cur=k;if(nEl)nEl.textContent=pad(k+1)+' / '+pad(s.frames.length)};
+    ths.forEach((t,k)=>{
+      t.addEventListener('click',e=>{e.stopPropagation();ch.go(k)});
+      t.addEventListener('mouseenter',()=>{ch.hold=true;ch.go(k)});
+      t.addEventListener('mouseleave',()=>{ch.hold=false});
+    });
+    chState.push(ch);
+    const open=()=>openSeries(i,ths[ch.cur]||bg,bg);
+    bg.addEventListener('click',open);
+    bg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+    sec.querySelector('.ch-open').addEventListener('click',()=>openSeries(i,bg,sec.querySelector('.ch-open')));
     const d=mkDwell();deck.appendChild(sec);deck.appendChild(d);
     chapters.push(sec);dwells.push(d);
   });
@@ -807,6 +829,14 @@ const SERIES=[
   function nextCover(){const ims=[...hmIn.children];ims[coverIdx].classList.remove('on');coverIdx=(coverIdx+1)%ims.length;ims[coverIdx].classList.add('on');labelCap()}
   capBtn.addEventListener('click',()=>openSeries(covers[coverIdx].s,hmIn,capBtn));
   if(!reduce.matches)setInterval(()=>{if(lbEl.hidden&&window.scrollY<innerHeight*.4&&!document.hidden)nextCover()},6000);
+
+  /* the case on screen slowly changes its photo; hovering a thumbnail holds it */
+  if(!reduce.matches&&'IntersectionObserver' in window){
+    const cio=new IntersectionObserver(es=>es.forEach(e=>{const ch=chState.find(c=>c.sec===e.target);if(!ch)return;
+      clearInterval(ch.timer);ch.timer=null;
+      if(e.isIntersecting&&ch.n>1)ch.timer=setInterval(()=>{if(!ch.hold&&lbEl.hidden&&!document.hidden)ch.go((ch.cur+1)%ch.n)},4200)}),{threshold:.6});
+    chState.forEach(c=>cio.observe(c.sec));
+  }
 
   /* language */
   function readLang(){try{return localStorage.getItem('af-lang')}catch(e){return null}}
@@ -1091,7 +1121,7 @@ const SERIES=[
 
   mm.add(fxQuery,()=>{
     root.classList.add('fx');
-    dwells.forEach((d,k)=>{let vh=60;if(k){const n=Math.min(4,SERIES[k-1].frames.length);vh=n>1?(n-1)*32+26:26}d.style.height=vh+'vh'});
+    dwells.forEach((d,k)=>{d.style.height=(k?22:60)+'vh'});
     const panels=[heroEl,...chapters];
 
     /* hero: the frame shrinks into a window and the headline lifts away, then the first case slides over it */
@@ -1109,22 +1139,8 @@ const SERIES=[
           onLeave:()=>{prev.style.visibility='hidden'},onEnterBack:()=>{prev.style.visibility=''}}})
         .to(prev.querySelector('.pi'),{scale:.9,yPercent:-3},0)
         .to(prev,{'--dim':.62},0)
-        .fromTo(cur.querySelector('.ch-stage'),{yPercent:14},{yPercent:0,ease:'power1.out'},0)
-        .fromTo(cur.querySelectorAll('.ch-copy > *'),{y:110,autoAlpha:0},{y:0,autoAlpha:1,stagger:.05,duration:.6,ease:'power2.out'},.3);
-    });
-
-    /* inside a case, scrolling flips through its frames with a shutter wipe */
-    chapters.forEach((sec,i)=>{
-      const st=sec.querySelector('.ch-stage'),fr=[...st.querySelectorAll('.frame')].slice(0,4),n=SERIES[i].frames.length;
-      const bar=st.querySelector('.ch-bar'),cnt=st.querySelector('.ch-count');
-      if(fr.length<2)return;
-      const tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:dwells[i+1],start:'top bottom',end:'bottom bottom',scrub:.4,
-        onUpdate:s=>{const k=Math.min(fr.length-1,Math.round(s.progress*(fr.length-1)));if(cnt)cnt.textContent=pad(k+1)+' / '+pad(n);if(bar)bar.style.setProperty('--p',s.progress.toFixed(3))}}});
-      fr.slice(1).forEach((f,k)=>{
-        tl.fromTo(f,{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:1,ease:'power2.inOut'},k*1.25);
-        const m=f.firstElementChild;if(m)tl.fromTo(m,{scale:1.16},{scale:1,duration:1.25,ease:'power1.out'},k*1.25);
-      });
-      tl.to({},{duration:.25});
+        .fromTo(cur.querySelector('.ch-bg'),{scale:1.18},{scale:1,ease:'power1.out'},0)
+        .fromTo(cur.querySelectorAll('.ch-copy > *, .ch-thumbs'),{y:110,autoAlpha:0},{y:0,autoAlpha:1,stagger:.05,duration:.6,ease:'power2.out'},.3);
     });
 
     /* colours follow the case on screen */
